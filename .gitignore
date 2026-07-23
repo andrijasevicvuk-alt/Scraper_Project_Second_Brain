@@ -1,0 +1,15 @@
+.env
+.env.*
+!.env.example
+*.db
+*.sqlite
+*.sqlite3
+*.zip
+runtime/
+snapshots/
+logs/
+checkpoints/
+.trash/
+Thumbs.db
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
