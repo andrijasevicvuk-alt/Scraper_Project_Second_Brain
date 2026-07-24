@@ -24,7 +24,7 @@ Create or update the root `AGENTS.md` with:
 
 ### 2. Audit the real repository
 
-Ask Codex for a no-edit repository and boundary audit.
+Create the private scraper_project repository with the approved AGENTS.md and boundary docs, then ask Codex to inspect the initial repository and implement the source-neutral contracts and scaffold only.
 
 ### 3. Implement source-neutral contracts
 
