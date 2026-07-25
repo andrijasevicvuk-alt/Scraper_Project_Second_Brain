@@ -12,6 +12,8 @@
 
 ## Immediate next action
 
+Current action: create the private `scraper_project` repository, add the five approved boundary files, make the initial manual commit, connect the repository to Codex, and then send Step 1 from [[16_Implementation_Prompt_Sequence]].
+
 ### 1. Freeze repository ownership
 
 Create or update the root `AGENTS.md` with:

@@ -27,7 +27,9 @@ The final goal is not just to make a scraper that works one time. The goal is to
 13. [[13_Risk_Register]]
 14. [[14_Project_Status_and_Next_Actions]]
 15. [[15_Decision_Log]]
-
+16. [[16_Implementation_Prompt_Sequence]]
+17. [[17_Master_Inventory]]
+18. [[18_Repository_Starter_Files]]
 ## Project rule
 
 > ==Obsidian is the project memory and operating manual. GitHub and the databases are the technical source of truth.==
