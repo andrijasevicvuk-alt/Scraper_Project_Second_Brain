@@ -12,7 +12,7 @@
 
 ## Immediate next action
 
-Current action: create the private `scraper_project` repository, add the five approved boundary files, make the initial manual commit, connect the repository to Codex, and then send Step 1 from [[16_Implementation_Prompt_Sequence]].
+Review and harden PR #1, merge the source-neutral foundation, then begin Step 2 from Note 16 on a new branch.
 
 ### 1. Freeze repository ownership
 

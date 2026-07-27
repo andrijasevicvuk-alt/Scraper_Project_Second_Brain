@@ -186,7 +186,7 @@ A clean repository containing:
     
 - tests;
     
-- protected acquisition directories;
+- protected acquisition paths remain absent or untouched;
     
 - initial Docker development files;
     

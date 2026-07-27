@@ -13,11 +13,11 @@ Inventory statuses:
 
 ## Repositories and documentation
 
-|Item|Role|Status|Source of truth|
-|---|---|---|---|
-|Scraper Project Second Brain|Project memory and operating manual|active|Private GitHub repository|
-|`scraper_project`|Source acquisition and source-readiness platform|next action|Future private GitHub repository|
-|YPI repository|Normalization, valuation-ready data, scoring and UI|active|YPI GitHub repository|
+| Item                         | Role                                                | Status                             | Source of truth                  |
+| ---------------------------- | --------------------------------------------------- | ---------------------------------- | -------------------------------- |
+| Scraper Project Second Brain | Project memory and operating manual                 | active                             | Private GitHub repository        |
+| `scraper_project`            | Source acquisition and source-readiness platform    | active / Private GitHub repository | Future private GitHub repository |
+| YPI repository               | Normalization, valuation-ready data, scoring and UI | active                             | YPI GitHub repository            |
 
 ## AI and agent tools
 
@@ -76,6 +76,8 @@ Inventory statuses:
 
 Candidate tools are not automatically approved dependencies.
 
+The current implementation uses standard-library dataclasses and unittest; Pydantic and pytest are not installed yet.
+
 ## Target sources
 
 |   |   |   |
@@ -129,20 +131,12 @@ tests/protected_acquisition/**
 
 ## Current deliverables
 
-- Create private `scraper_project` repository
+- PR correction
     
-- Add the five initial boundary files
+- Merge the new branch codex maid with the main branch
     
-- Make initial manual commit
-    
-- Connect repository to Codex
-    
-- Send Step 1 from Note 16
-    
-- Review Codex file plan before implementation
-    
-- Verify tests and protected-path compliance
-    
+- Send Step 2 from Note 16
+
 
 ## Inventory maintenance rules
 
