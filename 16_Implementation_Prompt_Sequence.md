@@ -341,6 +341,20 @@ The project can safely remember every job, retry, checkpoint, snapshot record an
 - Runtime databases are ignored by Git.
     
 
+### Completion status
+
+Step 2 core implementation was committed as:
+
+`4c0debe — feat: add sqlite runtime persistence`
+
+Status: `implemented, pending hardening`
+
+Remaining work:
+- complete crawl/partition lifecycle operations
+- complete parser-run lifecycle operations
+- test proxy ledger and dataset manifests
+- preserve the complete dataset manifest
+- add GitHub Actions CI
 ---
 
 ## Step 3 — Prove the isolated Docker and dual-node flow

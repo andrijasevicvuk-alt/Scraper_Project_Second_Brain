@@ -13,11 +13,11 @@ Inventory statuses:
 
 ## Repositories and documentation
 
-| Item                         | Role                                                | Status                             | Source of truth                  |
-| ---------------------------- | --------------------------------------------------- | ---------------------------------- | -------------------------------- |
-| Scraper Project Second Brain | Project memory and operating manual                 | active                             | Private GitHub repository        |
-| `scraper_project`            | Source acquisition and source-readiness platform    | active / Private GitHub repository | Future private GitHub repository |
-| YPI repository               | Normalization, valuation-ready data, scoring and UI | active                             | YPI GitHub repository            |
+| Item                         | Role                                                | Status | Source of truth           |
+| ---------------------------- | --------------------------------------------------- | ------ | ------------------------- |
+| Scraper Project Second Brain | Project memory and operating manual                 | active | Private GitHub repository |
+| `scraper_project`            | Source acquisition and source-readiness platform    | active | Private GitHub repository |
+| YPI repository               | Normalization, valuation-ready data, scoring and UI | active | YPI GitHub repository     |
 
 ## AI and agent tools
 
@@ -131,12 +131,12 @@ tests/protected_acquisition/**
 
 ## Current deliverables
 
-- PR correction
-    
-- Merge the new branch codex maid with the main branch
-    
-- Send Step 2 from Note 16
-
+- Create branch `codex/step2-persistence-hardening`
+- Complete persistence lifecycle methods
+- Add proxy-ledger and dataset-manifest integration tests
+- Add GitHub Actions CI
+- Review and merge the hardening pull request
+- Begin Step 3 dual-node fixture implementation
 
 ## Inventory maintenance rules
 

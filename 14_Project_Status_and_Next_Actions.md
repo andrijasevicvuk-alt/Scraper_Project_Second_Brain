@@ -9,10 +9,13 @@
 - The routine architecture is weekly hybrid-delta discovery with conditional detail fetching.
 - Gemini and Antigravity acquisition work must remain protected.
 - Codex should build source-neutral infrastructure and offline processing.
-
+- Step 1 source-neutral foundation is merged into `main`.
+- Step 2 SQLite persistence was committed in `4c0debe`.
+- Step 2 now includes migrations, queues, leases, retries, checkpoints, snapshot manifests, proxy ledger, backups and recovery.
+- A small Step 2 persistence-hardening pass is required before Step 3.
 ## Immediate next action
 
-Review and harden PR #1, merge the source-neutral foundation, then begin Step 2 from Note 16 on a new branch.
+Create branch `codex/step2-persistence-hardening`, complete the missing persistence lifecycle methods, repository integration tests and CI, review the pull request, then proceed to Step 3 from [[16_Implementation_Prompt_Sequence]].
 
 ### 1. Freeze repository ownership
 
@@ -60,8 +63,11 @@ Use measured proxy use, parser coverage, retry rate, snapshot integrity and qual
 
 ## Current blockers to record
 
-- real repository tree has not yet been audited against the intended architecture
 - dual-node note was previously empty and needs implementation evidence
 - actual proxy bytes per source are not yet measured
 - Genesis completion accounting is not yet implemented
-- source-neutral queue/checkpoint ownership needs to be confirmed
+- GitHub Actions CI is not implemented yet
+- parser-run lifecycle is incomplete
+- proxy-ledger integration tests are missing
+- dataset-batch manifest persistence is incomplete
+- crawl-run and partition completion/failure transitions need repository methods
