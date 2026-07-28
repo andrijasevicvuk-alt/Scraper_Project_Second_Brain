@@ -10,12 +10,13 @@
 - Gemini and Antigravity acquisition work must remain protected.
 - Codex should build source-neutral infrastructure and offline processing.
 - Step 1 source-neutral foundation is merged into `main`.
-- Step 2 SQLite persistence was committed in `4c0debe`.
-- Step 2 now includes migrations, queues, leases, retries, checkpoints, snapshot manifests, proxy ledger, backups and recovery.
-- A small Step 2 persistence-hardening pass is required before Step 3.
+- Step 2 SQLite persistence and hardening are complete and merged into `main`.
+- Step 2 includes packaged migrations, crawl and partition lifecycles, queues, leases, bounded retries, checkpoints, immutable snapshot manifests, parser-run state, proxy accounting, complete dataset manifests, backups and recovery.
+- The installed package and Docker image use the same canonical packaged migrations.
+- The complete synthetic test suite contains 29 passing tests and GitHub Actions is green.
 ## Immediate next action
 
-Create branch `codex/step2-persistence-hardening`, complete the missing persistence lifecycle methods, repository integration tests and CI, review the pull request, then proceed to Step 3 from [[16_Implementation_Prompt_Sequence]].
+Begin Step 3 from [[16_Implementation_Prompt_Sequence]]: implement the isolated Docker and dual-node fixture flow, then perform physical two-machine validation when the home PC is available.
 
 ### 1. Freeze repository ownership
 
@@ -66,8 +67,5 @@ Use measured proxy use, parser coverage, retry rate, snapshot integrity and qual
 - dual-node note was previously empty and needs implementation evidence
 - actual proxy bytes per source are not yet measured
 - Genesis completion accounting is not yet implemented
-- GitHub Actions CI is not implemented yet
-- parser-run lifecycle is incomplete
-- proxy-ledger integration tests are missing
-- dataset-batch manifest persistence is incomplete
-- crawl-run and partition completion/failure transitions need repository methods
+- Step 3 physical dual-node validation requires access to the home PC
+- actual proxy bytes per source remain unmeasured until controlled live pilots

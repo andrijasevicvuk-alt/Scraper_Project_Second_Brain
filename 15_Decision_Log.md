@@ -52,7 +52,9 @@ This note records architecture decisions so they are not silently changed later.
 
 **Reason:** The scraper must recover safely from crashes and preserve crawl state on the local worker PC.
 
-**Effect on architecture:** Step 2 is implemented in commit `4c0debe`, with one persistence-hardening pass required before dual-node integration.
+**Effect on architecture:** Step 2 is complete. SQLite runtime persistence uses packaged migrations, WAL mode, one authoritative queue owner, durable lifecycle transitions, bounded retries, checkpoints, immutable successful snapshots, proxy accounting and versioned dataset manifests.
+
+**Evidence:** Commits `4c0debe`, `12f900a` and `cddb3e4`; 29 passing tests; GitHub Actions green.
 
 **Status:** canonical
 ## New decision template

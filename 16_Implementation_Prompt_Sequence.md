@@ -340,21 +340,32 @@ The project can safely remember every job, retry, checkpoint, snapshot record an
     
 - Runtime databases are ignored by Git.
     
-
 ### Completion status
 
-Step 2 core implementation was committed as:
+Step 2 is complete.
+
+Core persistence commit:
 
 `4c0debe — feat: add sqlite runtime persistence`
 
-Status: `implemented, pending hardening`
+Hardening commits:
 
-Remaining work:
-- complete crawl/partition lifecycle operations
-- complete parser-run lifecycle operations
-- test proxy ledger and dataset manifests
-- preserve the complete dataset manifest
-- add GitHub Actions CI
+- `12f900a — feat: harden sqlite persistence lifecycle`
+- `cddb3e4 — fix: package runtime migrations`
+
+Final result:
+
+- 29 passing synthetic tests
+- GitHub Actions green
+- installed-package migration test passed
+- Docker migration smoke test passed
+- protected Gemini/Antigravity paths untouched
+- shared contracts unchanged
+
+## Step 2A — Harden SQLite persistence
+
+Status: complete and merged through PR #2.
+
 ---
 
 ## Step 3 — Prove the isolated Docker and dual-node flow

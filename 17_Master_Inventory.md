@@ -131,12 +131,11 @@ tests/protected_acquisition/**
 
 ## Current deliverables
 
-- Create branch `codex/step2-persistence-hardening`
-- Complete persistence lifecycle methods
-- Add proxy-ledger and dataset-manifest integration tests
-- Add GitHub Actions CI
-- Review and merge the hardening pull request
-- Begin Step 3 dual-node fixture implementation
+- Begin Step 3 isolated Docker and dual-node fixture implementation
+- Create persistent worker volumes and safe control scripts
+- Prove synthetic restart and resume behavior
+- Perform physical ThinkPad-to-home-PC validation when both machines are available
+- Prepare the Boat24 source specification after Step 3 is proven
 
 ## Inventory maintenance rules
 
