@@ -36,35 +36,41 @@ ChatGPT can help with:
 
 ChatGPT should review the protected acquisition zone from its outputs and contracts, not rewrite its internal implementation.
 
-## Gemini — source-specific acquisition design
+## Gemini — source-specific acquisition research, design and code authoring
 
-Gemini owns the design of the protected acquisition approach for each source.
+Gemini owns source-specific protected acquisition engineering for each source approved by Vuk.
 
-Gemini should define:
+Gemini should:
 
-- how discovery works
-- what identifies a listing
-- what list-level data is available
-- when rendering is required
-- what the acquisition adapter must return
-- source-specific errors and health signals
+- research the approved source
+- define discovery and partition behavior
+- define stable source identity
+- define list-level and detail-level responsibilities
+- determine when rendering is required
+- define source-specific errors and health signals
+- produce complete protected acquisition code
+- produce source-specific acquisition tests
+- produce fixture-selection plans
+- provide telemetry and pilot instructions
+- return code as complete files or patches
 
-Gemini should not change YPI canonical mapping, final cross-source dedupe, valuation scoring or UI rules.
+Gemini does not commit, push, open pull requests or merge.
 
-## Antigravity — protected acquisition implementation and execution
+Vuk manually applies and commits accepted Gemini-authored code.
 
-Antigravity works inside the protected acquisition area.
+ChatGPT reviews architecture, contracts and boundaries.
 
-It can:
+Codex validates integration, runs tests and may make minor Vuk-approved compatibility fixes. Codex must return source-strategy changes to Gemini rather than redesigning them independently.
 
-- implement Gemini's acquisition plan
-- run controlled live tests on the worker PC
-- produce snapshots and telemetry
-- provide repeatable worker commands
-- classify acquisition failures
+Gemini must not change YPI canonical mapping, final cross-source dedupe, valuation scoring or UI rules.
 
-It must not edit Codex-owned parser, normalization, database, quality, publication or YPI modules.
+## Antigravity — deprecated role
 
+Antigravity is not part of the current workflow.
+
+The previous Gemini-design-to-Antigravity-implementation handoff is superseded.
+
+No architecture, code ownership or execution responsibility is assigned to Antigravity.
 ## Codex — source-neutral platform engineer
 
 Codex can build:
@@ -86,7 +92,7 @@ Codex can build:
 
 ## Protected zone rule
 
-The Gemini + Antigravity integration is ==preserved==.
+The Gemini-authored protected acquisition boundary is ==preserved==.
 
 Codex and ChatGPT must not silently:
 
@@ -102,7 +108,7 @@ Optional alternatives may be documented, but they remain optional until I approv
 
 ```text
 src/contracts/                  shared, approval required
-src/acquisition/protected/      Gemini + Antigravity
+src/acquisition/protected/      Gemini authors; Vuk applies and commits
 src/orchestration/              Codex
 src/database/                   Codex
 src/storage/                    Codex

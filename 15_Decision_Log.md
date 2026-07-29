@@ -12,7 +12,7 @@ This note records architecture decisions so they are not silently changed later.
 
 **Decision:** Gemini and Antigravity own the protected acquisition implementation. Codex and ChatGPT do not replace it.
 
-**Status:** canonical
+**Status:** superseded by D-009
 
 ## D-003 — Source-neutral core
 
@@ -55,6 +55,20 @@ This note records architecture decisions so they are not silently changed later.
 **Effect on architecture:** Step 2 is complete. SQLite runtime persistence uses packaged migrations, WAL mode, one authoritative queue owner, durable lifecycle transitions, bounded retries, checkpoints, immutable successful snapshots, proxy accounting and versioned dataset manifests.
 
 **Evidence:** Commits `4c0debe`, `12f900a` and `cddb3e4`; 29 passing tests; GitHub Actions green.
+
+**Status:** canonical
+
+## D-009 — Gemini-authored acquisition with Vuk-controlled commits
+
+**Date:** 2026-07-29
+
+**Decision:** Gemini owns source-specific acquisition research, design and code authoring. Gemini returns complete files or patches but does not commit. Vuk controls application, commits, pilot execution and merges. ChatGPT reviews architecture. Codex validates integration and may make narrow Vuk-approved compatibility fixes.
+
+**Reason:** This removes an unnecessary Gemini-to-Antigravity handoff and gives Vuk direct control over every protected acquisition change.
+
+**Alternatives considered:** Separate Gemini design and Antigravity implementation roles.
+
+**Effect on architecture:** The protected acquisition boundary remains unchanged. Only the ownership and code-delivery workflow change. Codex remains source-neutral and YPI remains authoritative for canonical normalization, final dedupe, valuation eligibility and scoring.
 
 **Status:** canonical
 ## New decision template

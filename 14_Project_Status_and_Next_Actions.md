@@ -7,7 +7,7 @@
 - The scraper project has an initial architecture and source research notes.
 - The dual-node concept is defined but must be operationally proven.
 - The routine architecture is weekly hybrid-delta discovery with conditional detail fetching.
-- Gemini and Antigravity acquisition work must remain protected.
+- Gemini-authored acquisition code must remain protected; Vuk controls its application and commits.
 - Codex should build source-neutral infrastructure and offline processing.
 - Step 1 source-neutral foundation is merged into `main`.
 - Step 2 SQLite persistence and hardening are complete and merged into `main`.
@@ -46,7 +46,7 @@ Use [[templates/Source Note Template]].
 
 ### 6. Run a controlled acquisition sample
 
-Gemini + Antigravity provide fixtures and telemetry only within the protected area.
+Gemini produces the protected adapter code, fixture plan and telemetry requirements. Vuk applies and controls the code. ChatGPT reviews architecture, and Codex validates source-neutral integration.
 
 ### 7. Build Boat24 offline parser
 

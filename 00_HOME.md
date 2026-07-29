@@ -8,8 +8,7 @@ The final goal is not just to make a scraper that works one time. The goal is to
 - maintain the dataset through a [[06_Routine_Scrape|Routine Scrape]]
 - preserve raw snapshots and source trace
 - pass clean records into the YPI `raw → normalized → valuation-ready` pipeline
-- keep Gemini and Antigravity work isolated from Codex-owned modules
-
+- keep Gemini-authored acquisition code isolated from Codex-owned source-neutral modules
 ## Main navigation
 
 1. [[01_Main_Plan]]
@@ -22,7 +21,7 @@ The final goal is not just to make a scraper that works one time. The goal is to
 8. [[08_Proxy_Storage_and_Costs]]
 9. [[09_Quality_Dedupe_and_Review]]
 10. [[10_Codex_Workflow_and_Prompts]]
-11. [[11_Gemini_Antigravity_Handoff]]
+11. [[11_Gemini_Acquisition_Code_Workflow]]
 12. [[12_Second_Brain_Operating_System]]
 13. [[13_Risk_Register]]
 14. [[14_Project_Status_and_Next_Actions]]

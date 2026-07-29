@@ -16,18 +16,18 @@ Inventory statuses:
 | Item                         | Role                                                | Status | Source of truth           |
 | ---------------------------- | --------------------------------------------------- | ------ | ------------------------- |
 | Scraper Project Second Brain | Project memory and operating manual                 | active | Private GitHub repository |
-| `scraper_project`            | Source acquisition and source-readiness platform    | active | Private GitHub repository |
+| `scraper_project`            | Source acquisition and source-readiness platform    | active | Public GitHub repository  |
 | YPI repository               | Normalization, valuation-ready data, scoring and UI | active | YPI GitHub repository     |
 
 ## AI and agent tools
 
-|   |   |   |   |
-|---|---|---|---|
-|Tool|Responsibility|Status|Boundary|
-|ChatGPT|Architecture, integration, reviews, prompts and Obsidian updates|active|Does not replace protected acquisition|
-|Codex|Source-neutral platform, offline parsers, tests and exports|active|Cannot edit protected acquisition paths|
-|Gemini|Source-specific acquisition design|active|Does not own YPI business logic|
-|Antigravity|Protected adapter implementation and controlled execution|active|Edits only approved protected paths|
+|             |                                                                  |            |                                                                               |
+| ----------- | ---------------------------------------------------------------- | ---------- | ----------------------------------------------------------------------------- |
+| Tool        | Responsibility                                                   | Status     | Boundary                                                                      |
+| ChatGPT     | Architecture, integration, reviews, prompts and Obsidian updates | active     | Does not replace protected acquisition                                        |
+| Codex       | Source-neutral platform, offline parsers, tests and exports      | active     | Cannot edit protected acquisition paths                                       |
+| Gemini      | Source-specific acquisition research, design and code authoring  | active     | Returns files or patches; does not commit and does not own YPI business logic |
+| Antigravity | Previous protected implementation role                           | deprecated | Not part of the current workflow                                              |
 
 ## Machines
 
@@ -50,14 +50,14 @@ Inventory statuses:
 
 ## Acquisition tools
 
-|   |   |   |   |
-|---|---|---|---|
-|Tool|Role|Status|Notes|
-|Existing custom acquisition engine|Protected acquisition implementation|approved|Must not be replaced|
-|Scrapling|Optional isolated acquisition adapter|experimental|Must implement shared contracts|
-|Crawlee|Possible orchestration/acquisition component|candidate|Must not duplicate Scrapling retries|
-|DataImpulse residential proxies|Residential proxy traffic|active|Record bytes per source and run|
-|Stealth-browser runtime|Protected browser acquisition|active design|Gemini/Antigravity-owned|
+|                                    |                                              |               |                                      |
+| ---------------------------------- | -------------------------------------------- | ------------- | ------------------------------------ |
+| Tool                               | Role                                         | Status        | Notes                                |
+| Existing custom acquisition engine | Protected acquisition implementation         | approved      | Must not be replaced                 |
+| Scrapling                          | Optional isolated acquisition adapter        | experimental  | Must implement shared contracts      |
+| Crawlee                            | Possible orchestration/acquisition component | candidate     | Must not duplicate Scrapling retries |
+| DataImpulse residential proxies    | Residential proxy traffic                    | active        | Record bytes per source and run      |
+| Stealth-browser runtime            | Protected browser acquisition                | active design | Gemini                               |
 
 ## Data and pipeline tools
 

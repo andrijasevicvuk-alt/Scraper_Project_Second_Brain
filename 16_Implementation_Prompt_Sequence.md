@@ -80,7 +80,7 @@ Before changing anything:
     
 4. List every file you intend to create or modify.
     
-5. Confirm explicitly that no Gemini/Antigravity protected acquisition path will be modified.
+5. Confirm explicitly that no Gemini-authored protected acquisition path will be modified.
     
 
 Project purpose:
@@ -129,7 +129,7 @@ Architectural rules:
     
 - Do not implement CAPTCHA handling, anti-bot bypass, cookie harvesting, token interception, fingerprint manipulation or behavioral evasion.
     
-- Do not modify, rename, move, replace or reformat Gemini/Antigravity-owned acquisition paths.
+- Do not modify, rename, move, replace or reformat Gemini-authored protected acquisition paths.
     
 - Treat protected acquisition code as an opaque future implementation of the shared contracts.
     
@@ -224,7 +224,7 @@ Codex.
 
 Read `AGENTS.md`, all relevant docs and the shared contracts already implemented.
 
-Do not modify any Gemini/Antigravity protected acquisition path.
+Do not modify any Gemini-authored protected acquisition path.
 
 Implement the source-neutral persistence and orchestration foundation using SQLite for local scraper runtime state.
 
@@ -637,11 +637,11 @@ Separate:
 - unresolved questions.
     
 
-End with an implementation brief for Antigravity. Do not begin Genesis scraping.
+End with Gemini’s own implementation plan, protected file list and test plan. Do not write code during this design step. Do not begin Genesis scraping.
 
 ### Expected result
 
-A source-specific implementation specification for Antigravity.
+An approved source-specific design that Gemini will use during its separate code-authoring step.
 
 ### Check before continuing
 
@@ -664,11 +664,13 @@ A source-specific implementation specification for Antigravity.
 
 ### Goal
 
-Implement Gemini’s approved design only inside protected acquisition paths.
+Produce the complete Boat24 protected acquisition implementation from your approved Gemini design.
+
+Return complete files or unified patches. Do not commit, push, open a pull request or merge.
 
 ### Tool
 
-Antigravity.
+Gemini produces the code. Vuk applies it manually. ChatGPT and Codex review it.
 
 ### Exact prompt
 
@@ -800,7 +802,7 @@ Implement the Boat24 offline parser using only the approved fixtures under `test
 
 Do not make network requests.
 
-Do not modify Gemini/Antigravity protected acquisition paths.
+Do not modify Gemini-authored protected acquisition paths.
 
 Implement:
 
@@ -995,7 +997,7 @@ Measure real acquisition cost, reliability and data quality.
 
 ### Tool
 
-Antigravity executes. Vuk supervises manually.
+Vuk executes the approved Gemini-authored adapter manually. Codex may assist with source-neutral runtime operation. ChatGPT reviews the evidence.
 
 ### Exact prompt
 
@@ -1099,7 +1101,7 @@ For every failed requirement, state:
 - whether it blocks Genesis.
     
 
-Do not change or replace the Gemini/Antigravity acquisition implementation.
+Do not change or replace the Gemini-authored acquisition implementation.
 
 End with exact Obsidian changes.
 
@@ -1210,7 +1212,7 @@ Build the first complete Boat24 source foundation.
 
 ### Tool
 
-Antigravity executes the protected adapter through the approved controller.
+Vuk executes the approved Gemini-authored protected adapter through the approved source-neutral controller.
 
 ### Exact prompt
 
@@ -1474,7 +1476,7 @@ Add the remaining sources without changing the platform architecture.
 
 ### Tool
 
-Gemini, Antigravity, Codex, ChatGPT and Vuk repeat their assigned parts.
+Gemini, Codex, ChatGPT and Vuk repeat their assigned parts.
 
 ### Exact prompt template
 
@@ -1485,27 +1487,18 @@ Do not redesign the source-neutral architecture.
 Follow this sequence:
 
 1. ChatGPT prepares the source specification.
-    
-2. Gemini creates the source-specific acquisition design.
-    
-3. Antigravity implements the protected adapter and supplies fixtures.
-    
-4. Codex builds the offline parser.
-    
-5. Codex connects the adapter through existing contracts.
-    
-6. Antigravity runs staged pilots.
-    
-7. ChatGPT reviews Genesis readiness.
-    
-8. Vuk approves or rejects Genesis.
-    
-9. Antigravity executes Genesis.
-    
-10. Codex activates weekly routine maintenance.
-    
-11. Codex validates the YPI handoff.
-    
+2. Gemini researches and designs the source-specific acquisition.
+3. Gemini produces the protected adapter code and source-specific tests.
+4. Vuk applies the approved code to a feature branch.
+5. ChatGPT reviews architecture and boundaries.
+6. Codex builds the offline parser and validates integration.
+7. Codex fixes only approved compatibility problems.
+8. Vuk runs staged pilots.
+9. ChatGPT reviews Genesis readiness.
+10. Vuk approves or rejects Genesis.
+11. Vuk executes Genesis through the approved controller.
+12. Codex activates weekly routine maintenance.
+13. Codex validates the YPI handoff.
 
 Any source-specific requirement must remain inside the source adapter, parser, source registry or source configuration. Do not change the shared architecture unless Vuk explicitly approves a documented architecture decision.
 
