@@ -49,7 +49,7 @@ An almost-empty but version-controlled repository in which Codex already knows w
     
 - `AGENTS.md` is in the root.
     
-- Protected Gemini/Antigravity paths are documented.
+- Protected Gemini paths are documented.
     
 - No `.env`, proxy credentials, databases, snapshots, cookies or logs are committed.
     
@@ -359,7 +359,7 @@ Final result:
 - GitHub Actions green
 - installed-package migration test passed
 - Docker migration smoke test passed
-- protected Gemini/Antigravity paths untouched
+- - protected acquisition paths untouched
 - shared contracts unchanged
 
 ## Step 2A — Harden SQLite persistence
@@ -568,7 +568,7 @@ Read:
     
 - `AGENTS.md`;
     
-- the Gemini/Antigravity handoff documentation.
+- `11_Gemini_Acquisition_Code_Workflow.md`.
     
 
 Do not modify code yet.
@@ -674,7 +674,7 @@ Gemini produces the code. Vuk applies it manually. ChatGPT and Codex review it.
 
 ### Exact prompt
 
-Implement the approved Boat24 acquisition design inside the protected Gemini/Antigravity acquisition zone.
+Produce the approved Boat24 acquisition implementation inside the protected Gemini-authored acquisition zone.
 
 Read and obey:
 

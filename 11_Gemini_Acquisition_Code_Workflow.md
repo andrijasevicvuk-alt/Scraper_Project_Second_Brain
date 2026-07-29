@@ -1,3 +1,5 @@
+# Gemini Acquisition Code Workflow
+
 ## Objective
 
 For one approved source at a time, Gemini researches, designs and produces the source-specific protected acquisition code required by `scraper_project`.
