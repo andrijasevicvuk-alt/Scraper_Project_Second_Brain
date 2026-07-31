@@ -8,16 +8,23 @@ This note stores project assumptions. Actual decisions must be based on telemetr
 - existing working allowance: 5 GB for routine operations
 - Genesis traffic purchased separately as required
 
-## Genesis planning range for 50,000 listings
+## Genesis planning range for 100,000 listings (Capacity Target)
+
+*Note: Target is ~96,000 raw source records before cross-source deduplication.*
 
 | Scenario | Estimated traffic |
 |---|---:|
-| efficient | 15–20 GB |
-| realistic target | 25–40 GB |
-| browser-heavy | 60–100 GB |
-| repeated reruns / poor optimization | 100 GB+ |
+| efficient | 30–40 GB |
+| realistic target | 50–80 GB |
+| browser-heavy | 120–200 GB |
+| repeated reruns / poor optimization | 200 GB+ |
+> Do not buy the maximum before measuring Boat24 and iNautia pilots.
 
-Do not buy the maximum before measuring Boat24 pilots.
+## Storage planning
+For 100,000 capacity target listings without downloading all images:
+- initial primary dataset: approximately 70–120 GB
+- one-year primary storage: approximately 140–270 GB
+- with one local backup and safety margin: approximately 300–600 GB
 
 ## Routine planning range
 

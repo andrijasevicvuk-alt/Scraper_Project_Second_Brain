@@ -359,7 +359,7 @@ Final result:
 - GitHub Actions green
 - installed-package migration test passed
 - Docker migration smoke test passed
-- - protected acquisition paths untouched
+- protected acquisition paths untouched
 - shared contracts unchanged
 
 ## Step 2A — Harden SQLite persistence
