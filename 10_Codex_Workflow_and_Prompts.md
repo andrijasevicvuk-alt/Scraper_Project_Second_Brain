@@ -1,17 +1,17 @@
 # Codex Workflow and Prompts
 
-Codex should receive one narrow task at a time.
+Codex should receive one narrow source-neutral task at a time.
 
 ## Before every Codex task
 
 Codex must:
 
-1. read `AGENTS.md` and the relevant docs
-2. list the files it intends to change
-3. confirm protected acquisition paths are not included
-4. work in small commits
-5. run tests
-6. report conflicts instead of changing the architecture silently
+1. read `AGENTS.md` and relevant docs;
+2. list intended file changes;
+3. identify whether protected paths are involved;
+4. avoid direct protected-path edits;
+5. run appropriate tests;
+6. report architectural conflicts instead of changing them silently.
 
 ## Safe Codex sequence
 
@@ -21,54 +21,50 @@ No edits. Map the repository, protected paths, current contracts, missing compon
 
 ### Task 2 — source-neutral contracts
 
-Implement versioned types for:
-
-- DetailFetchJob
-- DiscoveryObservation
-- RawFetchArtifact
-- FetchTelemetry
-- ParsedListingCandidate
-- DatasetBatchManifest
+Implement versioned shared contracts.
 
 ### Task 3 — orchestration foundation
 
-Implement:
-
-- crawl runs and partitions
-- job queue
-- checkpoints
-- bounded retries
-- snapshot manifests
-- proxy ledger
-- parser runs
-- batch manifests
-- crash recovery
-
-No live target requests.
+Implement crawl runs, queues, checkpoints, bounded retries, snapshot manifests, telemetry ledgers, parser runs, batch manifests and crash recovery. No live target requests.
 
 ### Task 4 — one offline source parser
 
-Use saved fixtures only. Build strict parsing, evidence, confidence, warnings and regression tests.
+Use saved fixtures only. Build strict extraction, evidence, confidence, warnings, versioned selector/fingerprint sets and regression tests.
 
 ### Task 5 — controlled pilot integration
 
-Connect an existing protected adapter through the contracts without modifying its internals. Apply explicit pilot limits and budget stop conditions.
+Connect an existing Jules-authored protected adapter through contracts without modifying its internals. Apply pilot limits and budget stop conditions.
 
 ### Task 6 — weekly hybrid-delta routine
 
 Implement discovery comparison, detail reason codes, stale windows, missing verification, proxy-budget degradation and versioned delta batches.
 
-## Protected paths instruction
+## Protected implementation review rule
 
-Every prompt must include:
+Codex may inspect, execute and test protected code. Codex must not directly edit, rename, replace, reformat or recreate protected behaviour.
 
-> Do not modify, rename, move, replace or reformat Gemini/Antigravity-owned acquisition paths. Treat them as opaque implementations of the shared acquisition contracts.
+When Codex identifies a protected defect, it must provide:
+
+- exact affected file or component;
+- observed or reproducible failure;
+- contract or architecture rule violated;
+- expected behaviour;
+- a precise Jules repair prompt using [[templates/Jules Repair Prompt Template]];
+- tests that Jules' repair must satisfy.
+
+Codex may repair Codex-owned integration code. Protected implementation changes return to Jules.
+
+## Session Broker boundary
+
+Codex owns the authoritative crawl queue, job retries and canonical runtime migrations.
+
+A protected Session Broker may coordinate source-specific session state, but it must not create a second queue or independently requeue jobs. If its state is ever added to the canonical runtime database, Codex owns the migration after Vuk approves the interface.
 
 ## Secret handling
 
 Codex must not:
 
-- read or print `.env`
-- receive real proxy credentials in a prompt
-- commit runtime databases or snapshots
-- write secrets into examples or logs
+- read or print `.env`;
+- receive real proxy credentials in a prompt;
+- commit runtime databases, snapshots, cookies or session state;
+- write secrets into examples or logs.

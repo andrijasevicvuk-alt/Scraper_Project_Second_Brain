@@ -1,82 +1,38 @@
 # Second Brain Operating System
 
-A second brain makes sense for the scraper project ==now==, but it should start simple.
+The Second Brain is a human-readable control plane for architecture, source knowledge, experiments, roles, prompts and operating evidence.
 
 ## What it should do now
 
-Obsidian should help me:
-
-- remember architecture decisions
-- keep agent boundaries clear
-- track source status
-- store experiment results
-- keep prompts and handoffs
-- record proxy/storage assumptions
-- maintain runbooks and recovery steps
-- prevent repeated mistakes
-- know the exact next action
+- remember architecture decisions;
+- keep agent boundaries clear;
+- track source and version status;
+- store experiment plans and results;
+- keep prompts and handoffs;
+- record proxy and storage assumptions;
+- maintain runbooks and recovery steps;
+- prevent repeated mistakes;
+- identify the exact next action.
 
 ## What it should not do yet
 
-Do not build a complex AI API, vector database or autonomous agent memory layer before the scraper and YPI core are stable.
-
-That would create another system to debug before the main project works.
-
-## Stage A — now
-
-Use Obsidian as a human-readable control plane:
-
-- canonical project notes
-- templates
-- decision log
-- source dossiers
-- experiment logs
-- project status
-- prompts
-- runbooks
-
-Use simple frontmatter and stable filenames so the vault can be indexed later.
-
-## Stage B — after the scraper foundation and YPI core work
-
-Add machine-assisted retrieval only when:
-
-- canonical notes are stable
-- duplicate/outdated notes are separated
-- the repository contracts are stable
-- YPI has a working dataset and valuation flow
-- there is a real repeated workflow that retrieval will improve
-
-Later options may include:
-
-- indexed canonical Obsidian notes
-- retrieval for Codex or AI assistants
-- automatic project-status summaries
-- source-health summaries
-- prompt generation from current decisions
+Do not build a complex autonomous memory or RAG platform before the scraper and YPI core are stable.
 
 ## Source-of-truth hierarchy
 
-1. running code and tests
-2. migrations and database schema
-3. dataset manifests and telemetry
-4. canonical Obsidian notes
-5. archived notes and old conversations
+1. running code and tests;
+2. migrations and database schema;
+3. dataset manifests, fixtures and telemetry;
+4. canonical Second Brain notes and Decision Log;
+5. archived notes and old conversations.
 
-Obsidian controls the project, but it does not override verified repository evidence.
+Obsidian does not override verified repository evidence.
 
-## Note-status convention
+## Note status
 
-Use frontmatter or a visible field:
+Use note lifecycle status separately from design maturity.
 
-```yaml
-status: canonical
-owner: vuk
-last_verified: 2026-07-23
-related_repo: scraper_project
-```
-
-Possible statuses:
+Possible note statuses:
 
 - `canonical`
 - `draft`
@@ -84,18 +40,43 @@ Possible statuses:
 - `superseded`
 - `archive`
 
+## Design and evidence maturity
+
+Use these labels for architecture, tools and source-specific behaviour:
+
+- `hypothesis` — untested idea or claim;
+- `prototype_decision` — selected so implementation and testing can begin, but not proven;
+- `experiment_supported` — validated by a recorded, reproducible controlled experiment;
+- `production_approved` — accepted by Vuk for routine use after meeting defined criteria.
+
+A production-approved component may later be deprecated if evidence changes.
+
+## Canonical-note rule
+
+Before creating a new note:
+
+1. search for an existing canonical location;
+2. avoid duplicated instructions;
+3. link the note from HOME or the relevant source note;
+4. identify anything it supersedes;
+5. preserve useful historical evidence in `archive/` when necessary.
+
 ## Session rule for ChatGPT
 
-For project prompts, ChatGPT should:
+For project work, ChatGPT should:
 
-- review relevant available previous project context
-- preserve the Gemini/Antigravity protected zone
-- not replace architecture silently
-- distinguish facts from assumptions
-- finish every answer with an `Obsidian changes` section containing:
-  - Add
-  - Replace
-  - Remove
-  - Keep unchanged
+- check the Second Brain first and `scraper_project` second;
+- preserve Jules' protected implementation boundary;
+- preserve Gemini's source-blueprint responsibility;
+- never silently replace existing protected acquisition code;
+- distinguish hypotheses, prototype decisions, experimental evidence and production approval;
+- return protected-code defects as Jules repair prompts rather than direct rewrites;
+- finish project answers with exact Obsidian changes.
 
-If an older conversation is not available, ChatGPT must say so rather than inventing its content.
+## Session rule for Gemini
+
+Gemini should maintain source and architecture blueprints, label maturity honestly, link experiments and generate implementation-ready Jules prompts.
+
+## Session rule for Codex
+
+Codex should implement source-neutral infrastructure and offline parsing, test protected code through contracts and return protected defects to Jules.

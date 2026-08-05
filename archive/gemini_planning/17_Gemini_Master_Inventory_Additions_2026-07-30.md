@@ -1,4 +1,12 @@
 ---
+status: archive
+superseded_by: 17_Master_Inventory
+archived_on: 2026-08-05
+---
+
+> Historical Gemini planning addition. Useful items were reviewed and merged into the canonical `17_Master_Inventory.md`. Its role assignments, exact counts, costs and component statuses are not canonical unless confirmed elsewhere.
+
+---
 status: ACTIVE_ADDITIONS
 author: Gemini
 last_updated: 2026-07-30

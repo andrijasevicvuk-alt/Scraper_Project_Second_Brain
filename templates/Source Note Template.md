@@ -1,79 +1,103 @@
 ---
 status: draft
 source_name:
-owner_acquisition: Gemini-Antigravity
-owner_parser: Codex
-last_verified:
+blueprint_owner: Gemini
+protected_implementation_owner: Jules
+parser_owner: Codex
+maturity: hypothesis
+production_status: not_approved
+last_updated:
 ---
 
 # Source — NAME
 
-## Business role
+## Business role and scope
 
-## In-scope categories
+- business role:
+- in-scope categories:
+- excluded categories:
+- geographic scope:
 
-## Excluded categories
+## Source facts and evidence
 
-## Current evidence
+| Claim | Evidence reference | Maturity / fact status | Last checked |
+|---|---|---|---|
 
-### Observed
+## Required source-level fields
 
-### Verified
+- required:
+- optional:
+- unavailable or weak:
+
+## Discovery prototype
 
 ### Hypotheses
 
-### Deprecated information
-
-## Discovery
+### Prototype decisions
 
 - entry points:
 - pagination/partition strategy:
 - stable source key:
+- fallback identity:
 - list-level fields:
+- routine discovery policy:
 
-## Detail requirements
+## Acquisition prototype blueprint — Gemini
 
-- required fields:
-- optional fields:
-- known weak fields:
+- existing implementation to preserve:
+- routes by page type:
+- rendering/session requirements:
+- Session Sync or Broker requirements:
+- bounded internal attempts:
+- classified errors:
+- telemetry:
+- raw artifact requirements:
+- fixture plan:
 
-## Shared contract output
+Acquisition ends at `DiscoveryObservation`, `RawFetchArtifact` and `FetchTelemetry`.
 
-- DiscoveryObservation:
-- RawFetchArtifact:
-- FetchTelemetry:
+## Protected implementation — Jules
 
-## Fixtures
+- prototype version:
+- protected paths:
+- configuration paths:
+- protected tests:
+- commands:
+- implementation status:
+- review findings and repair prompts:
 
-- list fixtures:
-- detail fixtures:
-- edge cases:
+## Offline parser — Codex
 
-## Parser status
+- parser version:
+- strict extraction:
+- fallback extraction:
+- selector/fingerprint-set version:
+- field evidence and confidence:
+- resilience validation:
+- fixture coverage:
+
+## Experiment index
+
+| Experiment ID | Question | Result | Maturity effect | Link |
+|---|---|---|---|---|
 
 ## Pilot results
 
+- pilot version:
 - records discovered:
 - details fetched:
-- success rate:
-- retry rate:
+- success and failure rates:
 - proxy bytes:
-- field coverage:
+- snapshot integrity:
+- parser coverage:
+- terminal-state accounting:
 
-## Genesis readiness
+## Production approval
 
-- [ ] acquisition contract passes
-- [ ] fixtures approved
-- [ ] parser tests pass
-- [ ] persistent queue tested
-- [ ] budget projection measured
-- [ ] completion rules implemented
+- current maturity:
+- approved acquisition version:
+- approved parser version:
+- accepted limitations:
+- Vuk approval record:
 
-## Routine policy
-
-- discovery frequency:
-- stale refresh window:
-- priority rules:
-- missing verification:
-
-## Known limitations
+## Known limitations and next action

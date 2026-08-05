@@ -4,25 +4,30 @@ One number is not enough to explain whether a scraped record is useful.
 
 ## Separate quality signals
 
-Keep:
+Keep separate:
 
-- parse confidence
-- field completeness
-- source reliability
-- identity confidence
-- duplicate confidence
-- source-readiness score
-- final YPI data-quality score
-- valuation eligibility
+- parse confidence;
+- field completeness;
+- source reliability;
+- identity confidence;
+- selector or fingerprint repair confidence;
+- duplicate confidence;
+- source-readiness score;
+- final YPI data-quality score;
+- valuation eligibility.
 
-The scraper can calculate a source-readiness score. YPI remains responsible for final valuation eligibility.
+The scraper may calculate source-level readiness signals. YPI remains responsible for final valuation eligibility.
+
+A single acquisition-layer Yacht Quality Score is not authoritative and must not replace these separate signals.
 
 ## Validation order
 
 ```text
-ingestion validation
+raw artifact validation
+→ immutable snapshot
 → field extraction
 → source-level validation
+→ source-readiness signals
 → canonical mapping in YPI
 → unit and currency normalization
 → business validation
@@ -35,56 +40,45 @@ ingestion validation
 
 A detail record should attempt to provide:
 
-- source listing key
-- listing URL
-- title
-- builder
-- model
-- variant if available
-- year
-- asking price
-- currency
-- location
-- ownership signal if available
-- engine information
-- key dimensions
-- description
-- observation time
+- source listing key;
+- listing URL;
+- title;
+- builder;
+- model;
+- variant if available;
+- year;
+- asking price;
+- currency;
+- location;
+- ownership signal if available;
+- engine information;
+- key dimensions;
+- description;
+- observation time.
 
-Unknown values should remain unknown with evidence and confidence. They must not be invented.
+Unknown values remain unknown with evidence and confidence. They must not be invented.
 
 ## Duplicate handling
 
-Composite fingerprints and RapidFuzz-style similarity may generate candidates, but candidate generation is not the same as merging.
-
-Cross-source merge evidence can include:
-
-- normalized builder and model
-- year
-- length
-- location proximity
-- price proximity
-- engine signature
-- title and description similarity
-- image hash later
-- first-seen and last-seen patterns
+Composite fingerprints and similarity may generate candidates, but candidate generation is not merging.
 
 Ambiguous clusters go to review.
 
-## Review queue examples
+## Parser fallback and repair rule
 
-- unclear builder/model
-- unclear year
-- unclear ownership status
-- suspicious price
-- weak location extraction
-- conflicting engine values
-- duplicate candidate requiring confirmation
-- low-confidence parser fallback
-- unexpected source layout
+Extraction proceeds strict-first:
 
-## Parser fallback rule
+1. structured data or embedded state;
+2. semantic locators;
+3. controlled regex or text fallback;
+4. adaptive selector/fingerprint candidate.
 
-- strict extraction success → higher confidence
-- fuzzy or adaptive fallback → lower confidence and visible warning
-- no reliable result → `None` and review/failure reason
+Adaptive candidates never modify the active production parser in place.
+
+Promotion follows [[architecture/02_Offline_Parser_Resilience_and_Scrapling_Validation]]:
+
+- high confidence: automatic promotion to a new immutable version after all hard gates and shadow tests pass;
+- medium confidence: quarantine and broader testing;
+- low confidence: human review.
+
+Every fallback records evidence, method, warnings, parser version and selector/fingerprint-set version.

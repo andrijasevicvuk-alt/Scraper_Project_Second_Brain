@@ -1,34 +1,89 @@
 ---
-status: ACTIVE_LEDGER
-author: Gemini
-domain: Experimental Evidence
-last_updated: 2026-07-31
+status: canonical
+owner: Gemini / Vuk
+implementation_support: Jules / Codex
+last_updated: 2026-08-05
 ---
-## 1. Ledger Purpose & Rules
 
-This ledger is the empirical source of truth for the Scraper Project's acquisition layer. **Assumption-driven development is strictly prohibited.** 
+# Experiment Log Ledger
 
-**The Golden Rule:** No strategic pipeline change—such as swapping `Selectolax` for `Scrapling`, altering proxy backoff delays, or adjusting cookie Time-To-Live (TTL) timeouts—will be accepted or merged into the production platform without recorded, reproducible evidence logged in this directory. If a WAF bypass works, we prove it here first. If an adaptive parser works, we measure its accuracy here first.
+## Purpose
 
-## 2. The 4-Stage Testing Pipeline
+This directory is the empirical source of truth for acquisition, session, parser-resilience, proxy and performance claims.
 
-Before any target source adapter is authorized for a production Genesis Scrape, it must pass through this rigorous 4-stage experimental validation pipeline:
+A prototype decision may be implemented before it is proven. It must not be presented as experiment-supported or production-approved without a reproducible record.
+
+## Maturity transitions
 
 ```text
-┌────────────────────────────────────────────────────────────────────────┐
-│                      4-STAGE TESTING PIPELINE                          │
-├────────────────────────────────────────────────────────────────────────┤
-│                                                                        │
-│  [STAGE 1: WAF/TLS Probe] ────────► Validates HTTP 200 vs 403 blocks   │
-│           │                         using fast `curl_cffi` requests.   │
-│           ▼                                                            │
-│  [STAGE 2: Cookie TTL] ───────────► Measures the exact lifespan of     │
-│           │                         `cf_clearance` via `nodriver`.     │
-│           ▼                                                            │
-│  [STAGE 3: CDP Bandwidth Audit] ──► Confirms asset interception drops  │
-│           │                         page payloads to <75KB per fetch.  │
-│           ▼                                                            │
-│  [STAGE 4: DOM Resilience] ───────► Proves Scrapling auto-relocation   │
-│                                     works accurately on mutated HTML.  │
-│                                                                        │
-└────────────────────────────────────────────────────────────────────────┘
+hypothesis
+→ prototype_decision
+→ experiment_supported
+→ production_approved
+```
+
+- `hypothesis`: untested idea or source claim.
+- `prototype_decision`: selected so a complete prototype can be implemented and tested.
+- `experiment_supported`: controlled testing supports the claim within recorded conditions.
+- `production_approved`: Vuk accepts a version for routine use after it meets defined criteria.
+
+A failed experiment may return a design to `hypothesis`, replace the prototype decision or deprecate it.
+
+## Golden rules
+
+- Every experiment has an ID, date, owner, software versions, sample, command, evidence and result.
+- Exact counts, request rates, bandwidth reductions, session lifetimes and accuracy claims require evidence.
+- Experiments never expose credentials or cookies.
+- Production components are versioned and reproducible.
+- Runtime adaptive state cannot silently become production state.
+- An experiment supports only the conditions actually tested.
+
+## Current experiment families
+
+### Acquisition-route experiments
+
+- existing custom implementation baseline;
+- fast HTTP compatibility and throughput;
+- browser-mediated acquisition;
+- Scrapling fetcher comparison;
+- source/page routing decision.
+
+### Session experiments
+
+- browser-to-client Session Sync compatibility;
+- identity bundle lifetime;
+- broker generation and refresh lease;
+- thundering-herd prevention;
+- worker-crash lease recovery.
+
+### Proxy and asset experiments
+
+- list/detail bytes;
+- browser-bootstrap bytes;
+- source-specific asset blocking;
+- correctness after blocking;
+- cost per accepted record.
+
+### Parser-resilience experiments
+
+- strict structured extraction baseline;
+- semantic locator stability;
+- regex fallback accuracy;
+- controlled DOM mutation;
+- adaptive candidate accuracy;
+- high/medium/low validation calibration;
+- shadow-mode regression testing.
+
+## Promotion record
+
+Every maturity change must record:
+
+- previous and proposed maturity;
+- experiment IDs and evidence;
+- acceptance criteria;
+- known limitations;
+- version being promoted;
+- rollback version;
+- whether Vuk approval is required and received.
+
+Use [[templates/Experiment Log Template]] for each experiment.

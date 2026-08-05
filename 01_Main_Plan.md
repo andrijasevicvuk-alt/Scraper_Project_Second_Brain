@@ -4,7 +4,7 @@
 
 The scraper project has one main responsibility:
 
-> Build and maintain a trustworthy collection of source-level boat listing data, then hand it to YPI without mixing acquisition logic with valuation logic.
+> Build and maintain a trustworthy collection of source-level boat-listing data, then hand it to YPI without mixing acquisition logic with valuation logic.
 
 ## The complete system
 
@@ -17,7 +17,7 @@ Raw snapshots + telemetry
     ↓
 Offline parsing
     ↓
-Source-level validation
+Source-level validation and readiness signals
     ↓
 Dataset batch export
     ↓
@@ -38,19 +38,17 @@ The Genesis Scrape creates the first complete source snapshot.
 
 For every in-scope listing, the result must end in one known state:
 
-- detail successfully collected
-- list-level record accepted
-- excluded with a reason
-- failed with a classified reason
-- waiting for manual review
+- detail successfully collected;
+- list-level record accepted;
+- excluded with a reason;
+- failed with a classified reason;
+- waiting for manual review.
 
 A Genesis Scrape is not complete just because the script stopped.
 
 ### Phase 2 — Routine Scrape
 
 The Routine Scrape keeps the Genesis dataset current while protecting the proxy budget.
-
-The normal process is:
 
 ```text
 Weekly list-page discovery
@@ -64,12 +62,31 @@ Update last_seen, price history and listing state
 
 See [[06_Routine_Scrape]].
 
+## Source prototype lifecycle
+
+Each source follows the lifecycle defined in [[19_Prototype_Scraper_Workflow]]:
+
+```text
+generic prototype contract
+→ source-specific prototype blueprint
+→ Jules protected implementation
+→ saved fixtures
+→ controlled experiments
+→ Codex offline parser
+→ optimized source adapter
+→ staged pilots
+→ production-approved version
+```
+
+A prototype decision is detailed enough to implement and test, but it is not proof and it does not replace an existing approved component automatically.
+
 ## Vertical spike strategy
 
-I will finish one source at a time:
+Finish one source at a time:
 
 ```text
 source specification
+→ source-specific prototype
 → controlled acquisition sample
 → saved fixtures
 → offline parser
@@ -81,7 +98,7 @@ source specification
 → weekly routine
 ```
 
-The first completed source should prove the full platform. Later sources should reuse the same contracts and operational core.
+The first completed source should prove the full platform. Later sources reuse the same contracts and source-neutral operational core without assuming they need the same acquisition method.
 
 ## Recommended source order
 
@@ -92,19 +109,20 @@ The first completed source should prove the full platform. Later sources should 
 5. TheYachtMarket
 6. iNautia
 
-This order is not a rule that deletes or replaces a target. It is an execution order based on YPI value and engineering risk.
+This order is an execution order based on YPI value and engineering risk. It does not delete or replace a target.
 
 ## Definition of the final scraper project
 
 The scraper project is complete when every selected source has:
 
-- a registry entry
-- a controlled acquisition adapter
-- discovery and detail parsing
-- saved fixtures and regression tests
-- a versioned Genesis batch
-- proxy-use and quality reports
-- weekly routine scheduling
-- stale and removed-listing handling
-- monitoring and recovery documentation
-- a controlled YPI handoff
+- a registry entry;
+- a source-specific blueprint;
+- a controlled protected acquisition adapter;
+- discovery and detail parsing;
+- saved fixtures and regression tests;
+- a versioned Genesis batch;
+- proxy-use and quality reports;
+- weekly routine scheduling;
+- stale and removed-listing handling;
+- monitoring and recovery documentation;
+- a controlled YPI handoff.

@@ -49,7 +49,7 @@ An almost-empty but version-controlled repository in which Codex already knows w
     
 - `AGENTS.md` is in the root.
     
-- Protected Gemini paths are documented.
+- Protected acquisition paths are documented.
     
 - No `.env`, proxy credentials, databases, snapshots, cookies or logs are committed.
     
@@ -80,7 +80,7 @@ Before changing anything:
     
 4. List every file you intend to create or modify.
     
-5. Confirm explicitly that no Gemini-authored protected acquisition path will be modified.
+5. Confirm explicitly that no protected acquisition path will be modified.
     
 
 Project purpose:
@@ -129,7 +129,7 @@ Architectural rules:
     
 - Do not implement CAPTCHA handling, anti-bot bypass, cookie harvesting, token interception, fingerprint manipulation or behavioral evasion.
     
-- Do not modify, rename, move, replace or reformat Gemini-authored protected acquisition paths.
+- Do not modify, rename, move, replace or reformat protected acquisition paths.
     
 - Treat protected acquisition code as an opaque future implementation of the shared contracts.
     
@@ -224,7 +224,7 @@ Codex.
 
 Read `AGENTS.md`, all relevant docs and the shared contracts already implemented.
 
-Do not modify any Gemini-authored protected acquisition path.
+Do not modify any protected acquisition path.
 
 Implement the source-neutral persistence and orchestration foundation using SQLite for local scraper runtime state.
 
@@ -376,7 +376,7 @@ Prove the platform works between the ThinkPad control node and home-PC worker wi
 
 ### Tool
 
-Codex creates the infrastructure. Vuk runs it manually.
+Codex extends the source-neutral infrastructure. Vuk runs it manually.
 
 ### Exact prompt
 
@@ -386,47 +386,38 @@ Read and obey `AGENTS.md`.
 
 Do not modify protected acquisition code and do not make live requests.
 
-Create:
+Extend the existing root `Dockerfile` and `docker-compose.yml` rather than creating competing Docker scaffolding.
 
-- a non-root worker Dockerfile;
-    
-- Docker Compose configuration;
-    
-- persistent volumes for runtime database, checkpoints, snapshots, logs and exports;
-    
+Preserve the existing:
+
+- non-root worker user;
+- read-only container filesystem;
+- temporary filesystem configuration;
+- persistent `/app/runtime` volume;
+- packaged migration source.
+
+Add:
+
+- persistent volumes or approved subdirectories for runtime database, checkpoints, snapshots, logs and exports;
 - a local synthetic fixture server;
-    
 - worker health command;
-    
 - graceful shutdown handling;
-    
 - resume-after-restart support;
-    
-- CPU and memory configuration defaults suitable for a 16 GB RAM worker;
-    
+- CPU and memory defaults suitable for a 16 GB RAM worker;
 - PowerShell helper scripts for starting, stopping, checking and resuming the worker;
-    
 - redacted structured logging;
-    
 - disk-space safety checks.
-    
 
 Restrictions:
 
 - do not mount the Docker socket;
-    
 - do not bake secrets into the image;
-    
 - do not expose a public port by default;
-    
 - do not commit runtime data;
-    
 - do not create a second queue database;
-    
 - do not add Kubernetes;
-    
-- use Docker Compose.
-    
+- use Docker Compose;
+- do not implement Session Sync, Session Broker, Scrapling or live source acquisition in Step 3.
 
 Create an end-to-end fixture test:
 
@@ -435,34 +426,24 @@ Create an end-to-end fixture test:
 Document how Vuk can:
 
 1. start the worker on the home PC;
-    
 2. check it from the ThinkPad;
-    
 3. stop it safely;
-    
 4. restart it;
-    
 5. prove the queue resumes.
-    
 
 ### Expected result
 
-The project runs inside an isolated container, persists its state and recovers after interruption.
+The existing project scaffold runs inside an isolated container, persists state and recovers after interruption.
 
 ### Check before continuing
 
 - Container runs as non-root.
-    
+- Existing Docker safeguards remain.
 - A rebuild does not remove snapshots.
-    
 - A restart does not lose queue state.
-    
 - No secrets appear in logs.
-    
 - Synthetic end-to-end test passes.
-    
 - Only Docker Compose is used.
-    
 
 ---
 
@@ -470,7 +451,7 @@ The project runs inside an isolated container, persists its state and recovers a
 
 ### Goal
 
-Define exactly what Boat24 contributes before designing its acquisition implementation.
+Define exactly what Boat24 contributes before finalizing its prototype acquisition blueprint.
 
 ### Tool
 
@@ -480,48 +461,34 @@ ChatGPT, reviewed manually by Vuk.
 
 Check the Scraper Project Second Brain repository first.
 
-Using the current source note template, prepare the complete Boat24 source specification.
+Using [[templates/Source Note Template]] and [[19_Prototype_Scraper_Workflow]], prepare the complete Boat24 source specification.
 
 Include:
 
 - business role in YPI;
-    
-- in-scope listing categories;
-    
-- excluded categories;
-    
+- in-scope and excluded categories;
 - geographic scope;
-    
-- required source-level fields;
-    
+- required and optional source-level fields;
 - stable identity requirements;
-    
-- list-level fields;
-    
-- detail-level fields;
-    
+- list/detail responsibilities;
 - expected discovery partitions;
-    
-- snapshot requirements;
-    
-- acquisition output contract;
-    
-- parser responsibilities;
-    
+- snapshot and contract requirements;
+- offline parser responsibilities;
 - quality limitations;
-    
 - pilot limits;
-    
-- proxy metrics to record;
-    
+- proxy metrics;
 - Genesis completion requirements;
-    
 - routine refresh policy;
-    
-- evidence status for every claim: observed, hypothesis, verified or deprecated.
-    
+- evidence references and maturity status.
 
-Do not design or replace the protected Gemini/Antigravity acquisition internals.
+Use only:
+
+- `hypothesis`;
+- `prototype_decision`;
+- `experiment_supported`;
+- `production_approved`.
+
+Do not design, implement or replace Jules-authored protected acquisition internals. Preserve existing approved protected implementations.
 
 End with exact Obsidian changes.
 
@@ -532,25 +499,19 @@ One approved source specification that Gemini can use without inventing YPI requ
 ### Check before continuing
 
 - Source scope is clear.
-    
 - Required fields are explicit.
-    
 - Identity rule is explicit.
-    
-- List-page and detail-page responsibilities are separate.
-    
+- List and detail responsibilities are separate.
 - Unverified assumptions are labelled.
-    
 - Vuk approves the note.
-    
 
 ---
 
-## Step 5 — Design Boat24 acquisition
+## Step 5 — Design the Boat24 acquisition prototype
 
 ### Goal
 
-Create the source-specific acquisition design while respecting shared contracts.
+Create an implementation-ready source-specific acquisition blueprint while respecting existing protected implementations and shared contracts.
 
 ### Tool
 
@@ -558,239 +519,157 @@ Gemini.
 
 ### Exact prompt
 
-You are designing the protected Boat24 acquisition adapter for `scraper_project`.
+You are designing the protected Boat24 acquisition prototype for `scraper_project`.
 
 Read:
 
-- the Boat24 source specification;
-    
-- the shared contracts;
-    
-- `AGENTS.md`;
-    
-- `11_Gemini_Acquisition_Code_Workflow.md`.
-    
+- the approved Boat24 source specification;
+- shared contracts;
+- root `AGENTS.md`;
+- [[11_Gemini_Acquisition_Blueprint_Workflow]];
+- [[19_Prototype_Scraper_Workflow]];
+- the three architecture prototype notes;
+- relevant Experiment Ledger records;
+- the current protected implementation constraints.
 
-Do not modify code yet.
+Do not modify code.
 
-Design only:
+Design:
 
-- discovery entry points;
-    
-- pagination or partition strategy;
-    
-- stable source-listing identity;
-    
+- discovery entry points and partitions;
+- stable source identity;
 - list-card observation fields;
-    
 - conditions requiring detail fetches;
-    
-- acquisition modes required by different page types;
-    
-- expected artifact format;
-    
-- telemetry requirements;
-    
-- checkpoint boundaries;
-    
+- acquisition route by page type;
+- existing protected behaviour that must be preserved;
+- optional Session Sync and Session Broker prototype boundaries;
+- raw artifact format and telemetry;
+- bounded internal attempts;
 - source-specific error classes;
-    
-- safe pilot progression;
-    
-- expected proxy-cost measurements;
-    
-- fixture selection strategy.
-    
+- fixtures and experiment plan;
+- safe pilot progression and proxy measurements.
 
-The adapter must return:
+The protected adapter may return:
 
-- `DiscoveryObservation`
-    
-- `RawFetchArtifact`
-    
-- `FetchTelemetry`
-    
+- `DiscoveryObservation`;
+- `RawFetchArtifact`;
+- `FetchTelemetry`.
 
-It must not:
+It must not redefine:
 
-- modify Codex orchestration;
-    
-- modify offline parsers;
-    
-- modify YPI normalization;
-    
-- publish into YPI business tables;
-    
-- replace shared contracts;
-    
-- redesign the repository.
-    
+- Codex orchestration, queue or job retries;
+- canonical database migrations;
+- offline parsing, regex fallback or selector promotion;
+- quality scoring;
+- YPI normalization or publication;
+- shared contracts.
 
-Separate:
+Separate hypotheses, prototype decisions, experiment-supported claims and production-approved components.
 
-- verified observations;
-    
-- hypotheses requiring testing;
-    
-- implementation decisions;
-    
-- unresolved questions.
-    
+End with:
 
-End with Gemini’s own implementation plan, protected file list and test plan. Do not write code during this design step. Do not begin Genesis scraping.
+1. protected file map;
+2. complete Jules implementation prompt;
+3. protected test plan;
+4. Experiment Log plan;
+5. unresolved questions.
+
+Do not write code or run Genesis.
 
 ### Expected result
 
-An approved source-specific design that Gemini will use during its separate code-authoring step.
+An approved Gemini blueprint that Jules can implement without inventing architecture.
 
 ### Check before continuing
 
-- The design uses existing contracts.
-    
-- It does not redefine the queue.
-    
-- It does not redefine the parser.
-    
-- Every uncertain claim is labelled.
-    
-- Pilot limits are explicit.
-    
-- Vuk approves the design.
-    
+- Existing approved protected implementation is preserved.
+- Contracts are used without redefinition.
+- Queue and parser boundaries remain intact.
+- Every uncertain claim has honest maturity.
+- Pilot and experiment limits are explicit.
+- Vuk approves the prototype direction.
+- Repository role documents are synchronized with D-010 before Jules implementation begins.
 
 ---
 
-## Step 6 — Implement the protected Boat24 adapter
+## Step 6 — Implement the protected Boat24 prototype
 
 ### Goal
 
-Produce the complete Boat24 protected acquisition implementation from your approved Gemini design.
-
-Return complete files or unified patches. Do not commit, push, open a pull request or merge.
+Produce the complete Boat24 protected acquisition prototype from the approved Gemini blueprint.
 
 ### Tool
 
-Gemini produces the code. Vuk applies it manually. ChatGPT and Codex review it.
+Jules produces protected code and tests. Vuk applies it manually. ChatGPT and Codex review without directly rewriting protected implementation.
 
 ### Exact prompt
 
-Produce the approved Boat24 acquisition implementation inside the protected Gemini-authored acquisition zone.
+Implement the approved Boat24 acquisition prototype inside the protected acquisition zone.
 
 Read and obey:
 
-- root `AGENTS.md`;
-    
-- Boat24 source specification;
-    
-- Gemini acquisition design;
-    
-- shared contract definitions.
-    
+- root `AGENTS.md`, which must already reflect D-010 Jules ownership;
+- approved Boat24 source specification;
+- approved Gemini blueprint;
+- shared contracts;
+- [[18_Jules_Protected_Implementation_Workflow]].
 
-You may modify only:
-
-- protected Boat24 acquisition adapter files;
-    
-- protected worker configuration;
-    
-- source-specific protected acquisition tests;
-    
-- safe adapter usage documentation.
-    
+You may modify only the protected files explicitly listed in the approved blueprint.
 
 Do not modify:
 
 - shared contracts;
-    
-- Codex orchestration;
-    
+- Codex orchestration or queue;
 - database migrations;
-    
-- offline parsers;
-    
-- normalizers;
-    
-- validators;
-    
-- dedupe;
-    
-- quality scoring;
-    
-- publication;
-    
-- YPI code.
-    
+- offline parsers or selector/fingerprint promotion;
+- normalizers, validators, dedupe or quality scoring;
+- YPI code;
+- unrelated protected implementations.
 
 Required outputs:
 
-- valid `DiscoveryObservation` records;
-    
-- valid `RawFetchArtifact` records;
-    
-- valid `FetchTelemetry` records;
-    
+- valid `DiscoveryObservation`, `RawFetchArtifact` and `FetchTelemetry` values;
 - acquisition-version identifier;
-    
-- classified failure output;
-    
+- classified failures;
+- bounded internal attempts;
+- protected Session Broker only if approved by the blueprint;
 - repeatable worker command;
-    
-- 10–20 representative saved list/detail fixtures;
-    
-- byte-usage telemetry;
-    
-- short source health report.
-    
+- fixture collection plan and bounded commands;
+- byte telemetry;
+- protected tests;
+- known limitations.
 
-Use explicit pilot limits and bounded attempts.
+If root repository ownership rules still assign protected code authoring to Gemini, stop and request documentation synchronization before editing.
 
 Do not run a full Genesis scrape.
 
-At completion, show:
+Return complete files or unified patches. Do not commit, push, open a pull request or merge.
 
-1. all modified protected files;
-    
-2. the exact repeatable command;
-    
-3. contract-validation results;
-    
-4. fixture inventory;
-    
-5. proxy bytes consumed;
-    
-6. failure classifications;
-    
-7. unresolved source limitations.
-    
+### Review rule
+
+If ChatGPT or Codex finds a defect, they must provide a precise Jules repair prompt. They must not directly overwrite the protected implementation.
 
 ### Expected result
 
-A protected Boat24 adapter that returns source artifacts without changing the rest of the platform.
+A Jules-authored Boat24 prototype that returns raw source artifacts without changing source-neutral responsibilities.
 
 ### Check before continuing
 
-- Only protected files changed.
-    
+- Only approved protected files changed.
+- Existing approved protected behaviour was not silently replaced.
 - Contracts validate.
-    
-- Snapshots have hashes and paths.
-    
-- Proxy bytes are recorded.
-    
 - Attempts are bounded.
-    
-- Fixtures open offline.
-    
-- No direct YPI publication exists.
-    
+- No queue, parser or YPI ownership is duplicated.
+- Fixtures can be opened offline.
+- Executed tests are distinguished from planned tests.
 
 ---
 
-## Step 7 — Build the offline Boat24 parser
+## Step 7 — Build the offline Boat24 parser and resilience prototype
 
 ### Goal
 
-Turn saved Boat24 snapshots into source-level parsed candidates without live access.
+Turn saved Boat24 snapshots into source-level parsed candidates without live access and validate the automated repair flow.
 
 ### Tool
 
@@ -798,109 +677,50 @@ Codex.
 
 ### Exact prompt
 
-Implement the Boat24 offline parser using only the approved fixtures under `tests/fixtures/boat24/`.
+Implement the Boat24 offline parser using only approved fixtures under `tests/fixtures/boat24/`.
 
-Do not make network requests.
+Read [[architecture/02_Offline_Parser_Resilience_and_Scrapling_Validation]].
 
-Do not modify Gemini-authored protected acquisition paths.
+Do not make network requests. Do not modify Jules-authored protected acquisition paths.
 
 Implement:
 
-- list-card parser;
-    
-- detail-page parser;
-    
+- list-card and detail-page parsers;
 - parser version;
-    
-- field-level evidence;
-    
-- extraction method per field;
-    
-- extraction confidence per field;
-    
-- parser warnings;
-    
-- explicit failure reason codes;
-    
-- strict selector path;
-    
-- lower-confidence fallback path;
-    
-- fixture-based tests;
-    
-- regression tests.
-    
+- field-level evidence, extraction method and confidence;
+- strict structured and semantic extraction;
+- controlled regex/text fallback;
+- parser warnings and failure reasons;
+- versioned selector/fingerprint sets;
+- candidate-repair quarantine;
+- validation signals for similarity, type/range, context, uniqueness, previous values, cross-page consistency and independent extractors;
+- shadow-mode comparison;
+- high/medium/low outcome handling;
+- fixture-based regression tests.
 
-Preserve original source strings.
+Promotion rules:
 
-Return `None` for unknown fields.
+- high confidence may automatically create a new immutable promoted version after all hard gates and configured shadow criteria pass;
+- medium confidence remains quarantined for additional testing;
+- low confidence requires human review;
+- runtime auto-save never mutates the active production version.
 
-Do not perform:
+Do not perform final YPI mapping, cross-source merge, valuation eligibility, scoring or publication.
 
-- final canonical builder mapping;
-    
-- final model or variant mapping;
-    
-- cross-source duplicate merging;
-    
-- valuation eligibility;
-    
-- valuation scoring;
-    
-- YPI publication.
-    
-
-Produce a coverage report for:
-
-- source identity;
-    
-- title;
-    
-- builder signal;
-    
-- model signal;
-    
-- variant signal;
-    
-- year;
-    
-- asking price;
-    
-- currency;
-    
-- location;
-    
-- ownership signal;
-    
-- engine information;
-    
-- dimensions;
-    
-- description;
-    
-- image URLs or image count if available.
-    
-
-At completion, list every fixture and every missing or low-confidence field.
+At completion, list fixtures, missing fields, candidate versions, validation evidence and rollback behaviour.
 
 ### Expected result
 
-A deterministic and tested offline Boat24 parser.
+A deterministic Boat24 offline parser plus a versioned, reproducible repair-validation prototype.
 
 ### Check before continuing
 
-- No network imports or requests.
-    
+- No network requests.
 - All fixtures are tested.
-    
-- Parser failures are explicit.
-    
-- Raw strings are preserved.
-    
+- Active versions are immutable.
+- Candidate repair state is quarantined.
 - Missing values are not invented.
-    
-- Field coverage is acceptable for the pilot.
-    
+- Every promoted version is traceable and reproducible.
 
 ---
 
@@ -908,158 +728,82 @@ A deterministic and tested offline Boat24 parser.
 
 ### Goal
 
-Connect the protected adapter to the source-neutral queue and offline parser without changing either responsibility.
+Connect the Jules-authored protected adapter to the source-neutral queue and Codex offline parser without changing either responsibility.
 
 ### Tool
 
-Codex.
+Codex integrates source-neutral paths. ChatGPT reviews architecture. Protected defects return to Jules.
 
 ### Exact prompt
 
-Connect the existing protected Boat24 acquisition adapter to the source-neutral orchestration platform through the existing contracts.
+Connect the existing protected Boat24 adapter to the source-neutral orchestration platform through existing contracts.
 
-Do not modify the protected adapter internals.
+Do not modify protected adapter internals.
 
-Implement the controlled pilot flow:
+Implement:
 
-`discovery → observation validation → detail decision → detail job → protected acquisition call → raw artifact validation → snapshot manifest → offline parser → source-readiness result → pilot report`
+`discovery → observation validation → detail decision → detail job → protected acquisition call → raw artifact validation → immutable snapshot manifest → offline parser → source-readiness result → pilot report`
 
-Add:
+Add explicit discovery, detail-job, proxy-byte, failure-rate, parser-failure and disk-space limits; graceful pause/resume; integrity validation; coverage, cost, retry and terminal-state reporting.
 
-- explicit maximum discovery records;
-    
-- explicit maximum detail jobs;
-    
-- maximum proxy-byte budget;
-    
-- maximum failure-rate stop condition;
-    
-- maximum parser-failure stop condition;
-    
-- disk-space stop condition;
-    
-- graceful pause and resume;
-    
-- snapshot-integrity validation;
-    
-- pilot progress reporting;
-    
-- parser coverage summary;
-    
-- proxy-cost summary;
-    
-- retry summary;
-    
-- terminal-state accounting.
-    
+Do not run pilots or Genesis.
 
-Create commands for:
+If integration reveals a protected defect:
 
-- 20–50 listing pilot;
-    
-- 100 listing pilot;
-    
-- optional 1,000 listing pilot.
-    
+1. record the exact file/component and evidence;
+2. explain the contract or behaviour problem;
+3. create a precise Jules repair prompt;
+4. continue only after Vuk applies the Jules repair.
 
-Do not run the pilots yourself.
-
-Do not implement full Genesis crawling.
-
-At completion, provide a Genesis-readiness checklist that remains unapproved until Vuk reviews actual pilot evidence.
+Codex may fix only Codex-owned integration code.
 
 ### Expected result
 
-The system is ready for controlled live Boat24 pilots.
+The system is ready for controlled live Boat24 experiments and pilots.
 
 ### Check before continuing
 
-- Protected adapter internals remain unchanged.
-    
+- Protected internals remain unchanged by Codex.
 - Limits stop the pilot correctly.
-    
 - Every discovered record receives a terminal state.
-    
 - Resume works.
-    
 - Reports show bytes, retries and parser coverage.
-    
-- Vuk approves the pilot configuration.
-    
+- Vuk approves pilot configuration.
 
 ---
 
-## Step 9 — Execute staged Boat24 pilots
+## Step 9 — Execute staged Boat24 experiments and pilots
 
 ### Goal
 
-Measure real acquisition cost, reliability and data quality.
+Measure acquisition cost, session reliability, parser behaviour and data quality.
 
 ### Tool
 
-Vuk executes the approved Gemini-authored adapter manually. Codex may assist with source-neutral runtime operation. ChatGPT reviews the evidence.
+Vuk executes the approved Jules-authored prototype manually. Codex assists with source-neutral operation. Gemini maintains source and experiment notes. ChatGPT reviews evidence.
 
 ### Exact prompt
 
-Run the approved Boat24 pilot through the existing source-neutral orchestration.
+Run only the approved Boat24 experiment or pilot through existing source-neutral orchestration.
 
-Do not edit Codex-owned modules.
+Do not edit Codex-owned or Jules-authored modules during execution.
 
-Run only the currently approved pilot size.
+Return the experiment ID, versions, sample, discovered/detail counts, artifact outcomes, classified failures, job retries, protected internal attempts, proxy bytes, duration, session-refresh evidence, snapshot integrity, parser coverage, repair-validation outcomes, readiness distribution and terminal-state accounting.
 
-Return:
-
-- discovered count;
-    
-- detail-job count;
-    
-- successful artifacts;
-    
-- classified failures;
-    
-- retry count;
-    
-- proxy bytes;
-    
-- average bytes per list page;
-    
-- average bytes per detail page;
-    
-- average duration;
-    
-- snapshot-integrity result;
-    
-- parser coverage;
-    
-- source-readiness distribution;
-    
-- terminal-state accounting;
-    
-- checkpoint and resume evidence.
-    
-
-Stop when any configured budget or safety threshold is reached.
-
-Do not continue to a larger pilot without explicit approval from Vuk.
+Stop at any configured limit. Do not advance maturity or pilot size without Vuk approval.
 
 ### Expected result
 
-Measured evidence from 20–50, then 100, and optionally 1,000 listings.
+Reproducible evidence that can move specific claims from hypothesis to experiment-supported and later support production approval.
 
 ### Check before continuing
 
 - Costs are measured, not guessed.
-    
+- Queue retries and protected internal attempts are distinguished.
 - Failure types are understood.
-    
-- Parser coverage is adequate.
-    
+- Parser and repair versions are recorded.
 - No records disappear from accounting.
-    
-- Resume has been demonstrated.
-    
-- Projected Genesis proxy cost is acceptable.
-    
+- Resume and rollback are demonstrated.
 
 ---
 
@@ -1067,7 +811,7 @@ Measured evidence from 20–50, then 100, and optionally 1,000 listings.
 
 ### Goal
 
-Decide whether Boat24 is ready for full collection.
+Decide whether the Boat24 acquisition and parser versions are ready for full collection.
 
 ### Tool
 
@@ -1077,37 +821,23 @@ ChatGPT reviews. Vuk decides manually.
 
 Check the Second Brain repository first.
 
-Review the Boat24 pilot report, terminal-state report, parser coverage, proxy usage, retries, snapshot integrity and known limitations.
+Review experiment records, pilot reports, terminal-state accounting, parser coverage, repair-validation evidence, proxy usage, job retries, protected internal attempts, session recovery, snapshot integrity and known limitations.
 
 Return one decision:
 
-- `READY_FOR_GENESIS`
-    
-- `READY_WITH_CONDITIONS`
-    
-- `NOT_READY`
-    
+- `READY_FOR_GENESIS`;
+- `READY_WITH_CONDITIONS`;
+- `NOT_READY`.
 
-For every failed requirement, state:
+For every failed requirement, state evidence, severity, owner, exact fix and whether it blocks Genesis.
 
-- evidence;
-    
-- severity;
-    
-- owner;
-    
-- exact fix;
-    
-- whether it blocks Genesis.
-    
-
-Do not change or replace the Gemini-authored acquisition implementation.
+If the defect is inside protected implementation, create a precise Jules repair prompt. Do not change or replace Jules-authored protected code directly.
 
 End with exact Obsidian changes.
 
 ### Expected result
 
-A documented readiness decision.
+A documented readiness decision for explicit acquisition and parser versions.
 
 ### Check before continuing
 
@@ -1212,55 +942,19 @@ Build the first complete Boat24 source foundation.
 
 ### Tool
 
-Vuk executes the approved Gemini-authored protected adapter through the approved source-neutral controller.
+Vuk executes the approved Jules-authored acquisition version through the approved Codex source-neutral controller and parser version.
 
 ### Exact prompt
 
-Execute the approved Boat24 Genesis run through the existing source-neutral orchestration.
+Execute the production-approved Boat24 Genesis run through existing source-neutral orchestration.
 
-Do not change architecture or source scope during execution.
+Do not change architecture, maturity, implementation version or source scope during execution.
 
-Use:
+Use approved discovery partitions, budgets, concurrency, queue retry limits, protected internal attempt limits, stop conditions, storage, acquisition version, session policy, parser version and selector/fingerprint version.
 
-- approved discovery partitions;
-    
-- approved proxy budget;
-    
-- approved concurrency;
-    
-- approved retry limits;
-    
-- approved stop conditions;
-    
-- approved snapshot storage;
-    
-- approved parser version.
-    
+Produce final terminal-state reconciliation, raw snapshot manifest, parser report, proxy/session report, failure report, manual-review export, versioned dataset-batch manifest, checksum, YPI raw-ingestion validation and second-discovery delta test.
 
-Produce:
-
-- final terminal-state reconciliation;
-    
-- complete raw snapshot manifest;
-    
-- parser-run report;
-    
-- proxy-usage report;
-    
-- failure report;
-    
-- manual-review export;
-    
-- versioned dataset-batch manifest;
-    
-- checksum;
-    
-- YPI raw-ingestion validation result;
-    
-- second-discovery delta-test result.
-    
-
-Pause safely rather than changing architecture when a blocker appears.
+Pause safely rather than editing architecture or protected code when a blocker appears.
 
 ### Expected result
 
@@ -1269,17 +963,11 @@ A complete, versioned Boat24 Genesis batch.
 ### Check before continuing
 
 - All partitions completed or are explicitly classified.
-    
 - No unaccounted jobs remain.
-    
 - Batch checksum is valid.
-    
-- Manual QA sample passes.
-    
-- YPI raw-ingestion validation passes.
-    
+- Acquisition, parser and selector/fingerprint versions are recorded.
+- Manual QA and YPI ingestion validation pass.
 - Delta test works.
-    
 
 ---
 
@@ -1472,76 +1160,50 @@ Boat24 data can enter YPI raw ingestion without coupling the two repositories.
 
 ### Goal
 
-Add the remaining sources without changing the platform architecture.
+Add the remaining sources without changing the source-neutral platform architecture.
 
 ### Tool
 
-Gemini, Codex, ChatGPT and Vuk repeat their assigned parts.
+ChatGPT, Gemini, Jules, Codex and Vuk repeat their non-overlapping roles.
 
 ### Exact prompt template
 
 We are adding `<SOURCE>` to the existing stable scraper platform.
 
-Do not redesign the source-neutral architecture.
+Follow [[19_Prototype_Scraper_Workflow]] and do not redesign the source-neutral architecture.
 
-Follow this sequence:
+Sequence:
 
 1. ChatGPT prepares the source specification.
-2. Gemini researches and designs the source-specific acquisition.
-3. Gemini produces the protected adapter code and source-specific tests.
-4. Vuk applies the approved code to a feature branch.
-5. ChatGPT reviews architecture and boundaries.
-6. Codex builds the offline parser and validates integration.
-7. Codex fixes only approved compatibility problems.
-8. Vuk runs staged pilots.
-9. ChatGPT reviews Genesis readiness.
-10. Vuk approves or rejects Genesis.
-11. Vuk executes Genesis through the approved controller.
-12. Codex activates weekly routine maintenance.
-13. Codex validates the YPI handoff.
+2. Gemini researches the source and produces the prototype blueprint and experiment plan.
+3. Vuk approves the prototype direction.
+4. Jules implements protected adapter code and protected tests.
+5. Vuk applies Jules' files to a feature branch.
+6. ChatGPT audits architecture and boundaries.
+7. Codex builds the offline parser and validates source-neutral integration.
+8. Protected defects return as precise Jules repair prompts; Codex fixes only Codex-owned integration code.
+9. Vuk runs controlled experiments and staged pilots.
+10. Gemini updates source evidence and experiment notes.
+11. ChatGPT reviews production and Genesis readiness.
+12. Vuk approves or rejects production/Genesis.
+13. Vuk executes Genesis through the approved controller.
+14. Codex activates weekly routine maintenance and validates YPI handoff.
 
-Any source-specific requirement must remain inside the source adapter, parser, source registry or source configuration. Do not change the shared architecture unless Vuk explicitly approves a documented architecture decision.
+Any source-specific requirement remains inside the source specification, protected adapter, parser, registry or configuration. Shared architecture changes require a documented Vuk decision.
 
 ### Recommended source order
 
 1. Boat24
-    
 2. Croatian Yachting
-    
-3. MarineOne/YachtBrokerage
-    
+3. MarineOne / YachtBrokerage
 4. Njuškalo Nautika
-    
 5. TheYachtMarket
-    
 6. iNautia
-    
 
 ### Expected result
 
-Each source has:
-
-- source specification;
-    
-- protected adapter;
-    
-- offline parser;
-    
-- fixture tests;
-    
-- pilot report;
-    
-- Genesis batch;
-    
-- routine schedule;
-    
-- proxy report;
-    
-- source-health monitoring;
-    
-- YPI export validation.
-    
+Each source has a specification, Gemini blueprint, Jules protected adapter, Codex offline parser, fixtures, experiment evidence, pilot report, approved versions, Genesis batch, routine schedule, proxy report, source-health monitoring and YPI validation.
 
 ### Check before declaring the scraper complete
 
-All selected sources have passed their own Genesis and routine-operation gates, and failure of one source cannot stop the others.
+All selected sources have passed their own production, Genesis and routine-operation gates, and failure of one source cannot stop the others.

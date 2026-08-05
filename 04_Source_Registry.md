@@ -17,6 +17,8 @@ Every source must be defined before its scraper is treated as production-ready.
 - `required_detail_fields`
 - `parser_version`
 - `acquisition_version`
+- `prototype_version`
+- `maturity_status`
 - `reliability_score`
 - `price_signal_strength`
 - `year_signal_strength`
@@ -28,11 +30,13 @@ Every source must be defined before its scraper is treated as production-ready.
 - `status`
 - `notes`
 
-## Source status vocabulary
+## Source delivery status
 
 - `planned`
 - `researching`
-- `acquisition_prototype`
+- `source_specification`
+- `prototype_blueprint`
+- `prototype_implemented`
 - `fixtures_collected`
 - `parser_prototype`
 - `pilot_ready`
@@ -42,41 +46,40 @@ Every source must be defined before its scraper is treated as production-ready.
 - `paused`
 - `deprecated`
 
+## Design and evidence maturity
+
+Use the maturity vocabulary defined in [[19_Prototype_Scraper_Workflow]]:
+
+- `hypothesis`
+- `prototype_decision`
+- `experiment_supported`
+- `production_approved`
+
+A source can have a working prototype while still containing hypotheses. Production approval applies to a versioned source adapter and parser configuration, not to an entire website forever.
+
 ## Current targets
 
-### Boat24
+1. Boat24 — broad marketplace backbone.
+2. Croatian Yachting — Croatian and Adriatic broker trust anchor.
+3. MarineOne / YachtBrokerage — additional Croatian and Adriatic broker trust anchor.
+4. Njuškalo Nautika — Croatian marketplace breadth for valuation-relevant categories.
+5. TheYachtMarket — broad international and Mediterranean context.
+6. iNautia — Mediterranean and European expansion layer.
 
-Role: broad marketplace backbone.
-
-### Croatian Yachting
-
-Role: Croatian and Adriatic broker trust anchor.
-
-### MarineOne / YachtBrokerage
-
-Role: additional Croatian and Adriatic broker trust anchor.
-
-### Njuškalo Nautika
-
-Role: Croatian marketplace breadth. Only valuation-relevant vessel categories should be included.
-
-### TheYachtMarket
-
-Role: broad international and Mediterranean context.
-
-### iNautia
-
-Role: Mediterranean and European expansion layer.
-
-Alternatives remain documented but do not replace the official target without a decision in [[15_Decision_Log]].
+Alternatives remain documented but do not replace an official target without a decision in [[15_Decision_Log]].
 
 ## Source note rule
 
 Every source gets its own note created from [[templates/Source Note Template]].
 
-Claims must be labelled:
+A source note must separate:
 
-- ==Observed== — directly seen in a test or fixture
-- ==Verified== — repeated and confirmed
-- ==Hypothesis== — suspected but not proven
-- ==Deprecated== — previously believed but no longer current
+- source facts and their evidence;
+- hypotheses;
+- prototype decisions selected for implementation;
+- experiment-supported behaviour;
+- production-approved versions;
+- Gemini blueprint ownership;
+- Jules protected implementation ownership;
+- Codex parser and source-neutral integration ownership;
+- linked experiment records and pilot reports.

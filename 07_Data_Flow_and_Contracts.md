@@ -2,97 +2,89 @@
 
 The protected acquisition implementation and the source-neutral platform communicate through small, versioned contracts.
 
+## Canonical flow
+
+```text
+source-neutral queue
+→ Jules-authored protected acquisition adapter
+→ DiscoveryObservation / RawFetchArtifact / FetchTelemetry
+→ immutable snapshot manifest
+→ Codex offline parser
+→ ParsedListingCandidate
+→ source-level validation and readiness
+→ DatasetBatchManifest
+→ YPI raw ingestion
+```
+
 ## DetailFetchJob
 
-- job ID
-- source name
-- source listing key
-- listing URL
-- reason code
-- priority
-- attempt number
-- scheduled time
+A source-neutral request for an approved detail acquisition. The authoritative queue and job retry lifecycle are Codex-owned.
 
 ## DiscoveryObservation
 
-- source name
-- source listing key
-- listing URL
-- observation time
-- visible title
-- visible price
-- visible currency
-- visible specifications
-- visible status
-- card fingerprint
+A lightweight source-level observation from discovery or list pages.
 
 ## RawFetchArtifact
 
-- source name
-- source listing key
-- listing URL
-- fetch time
-- fetch method label
-- acquisition version
-- snapshot path
-- content hash
-- response status
-- artifact status
+A protected acquisition output referencing the immutable source response. Acquisition ends at the raw artifact and telemetry boundary; it does not perform offline field extraction or source-readiness scoring.
 
 ## FetchTelemetry
 
-- job ID
-- source name
-- bytes sent
-- bytes received
-- duration
-- attempt number
-- outcome
-- error class
-- proxy-pool label
+Operational measurements for one acquisition attempt. It may contain safe labels and classified outcomes, but never credentials, cookies, tokens or browser profiles.
 
 ## ParsedListingCandidate
 
-The offline parser returns:
+The Codex-owned offline parser returns:
 
-- source-level identity
-- raw extracted fields
-- field-level evidence
-- extraction method per field
-- confidence per field
-- parser version
-- parser warnings
+- source-level identity;
+- raw extracted fields;
+- field-level evidence;
+- extraction method per field;
+- confidence per field;
+- parser version;
+- selector or fingerprint-set version when adaptive extraction is used;
+- parser warnings and failure reasons.
 
-The parser must not decide:
+The parser performs no network requests and must not decide:
 
-- final canonical builder/model/variant
-- final cross-source duplicate merge
-- valuation eligibility
-- scoring weight
+- final canonical builder/model/variant;
+- final cross-source duplicate merge;
+- valuation eligibility;
+- valuation scoring.
+
+## Protected session state
+
+Session cookies, user-agent values, browser state and source-specific session leases are internal protected runtime state.
+
+They must not appear in shared contracts, Git, Obsidian, logs, manifests or prompts.
+
+A protected Session Broker may coordinate session refresh inside one acquisition call, but it does not own the job queue, job retry transitions or checkpoints. After bounded protected attempts, it returns a classified result to the source-neutral orchestrator.
 
 ## Data ownership boundary
 
 ### Scraper project owns
 
-- discovery
-- raw snapshots
-- source-level parsing
-- acquisition telemetry
-- source-readiness signals
-- batch manifests
+- discovery;
+- protected acquisition;
+- raw snapshots;
+- source-level offline parsing;
+- acquisition telemetry;
+- source-readiness signals;
+- batch manifests.
 
 ### YPI owns
 
-- canonical mapping
-- normalized boats and engines
-- cross-source duplicate clusters
-- final data quality and eligibility
-- valuation-ready publication
-- scoring and valuation UI
+- canonical mapping;
+- normalized boats and engines;
+- cross-source duplicate clusters;
+- final business data quality and valuation eligibility;
+- valuation-ready publication;
+- scoring and valuation UI.
 
 ## Source of truth
 
-- raw snapshot = truth about what the source returned at a moment
-- scraper database = truth about crawl state
-- YPI database = truth about normalized and valuation-ready business records
-- Obsidian = truth about intended architecture, decisions and operating procedures
+- raw snapshot = truth about what the source returned at a moment;
+- scraper database = truth about source-neutral crawl and processing state;
+- protected runtime state = temporary session material, never business data;
+- YPI database = truth about normalized and valuation-ready business records;
+- Obsidian = intended architecture, decisions and operating procedures.

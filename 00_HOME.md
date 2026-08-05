@@ -1,14 +1,15 @@
 # Scraper Project — Second Brain
 
-This folder is the control center for my `scraper_project`, a side project that collects, stores, cleans and maintains boat listing data for [[YPI]].
+This vault is the human-readable control center for `scraper_project`, a side project that collects, stores, cleans and maintains boat-listing data for [[YPI]].
 
-The final goal is not just to make a scraper that works one time. The goal is to create a ==stable data acquisition system== that can:
+The goal is a stable data-acquisition system that can:
 
-- build the first complete dataset through a [[05_Genesis_Scrape|Genesis Scrape]]
-- maintain the dataset through a [[06_Routine_Scrape|Routine Scrape]]
-- preserve raw snapshots and source trace
-- pass clean records into the YPI `raw → normalized → valuation-ready` pipeline
-- keep Gemini-authored acquisition code isolated from Codex-owned source-neutral modules
+- build the first complete dataset through a [[05_Genesis_Scrape|Genesis Scrape]];
+- maintain it through a [[06_Routine_Scrape|Routine Scrape]];
+- preserve raw snapshots, telemetry and source trace;
+- pass source-level batches into the YPI `raw → normalized → valuation-ready` pipeline;
+- keep Gemini source blueprints, Jules protected implementation and Codex source-neutral modules separated.
+
 ## Main navigation
 
 1. [[01_Main_Plan]]
@@ -21,31 +22,49 @@ The final goal is not just to make a scraper that works one time. The goal is to
 8. [[08_Proxy_Storage_and_Costs]]
 9. [[09_Quality_Dedupe_and_Review]]
 10. [[10_Codex_Workflow_and_Prompts]]
-11. [[11_Gemini_Acquisition_Code_Workflow]]
+11. [[11_Gemini_Acquisition_Blueprint_Workflow]]
 12. [[12_Second_Brain_Operating_System]]
 13. [[13_Risk_Register]]
 14. [[14_Project_Status_and_Next_Actions]]
 15. [[15_Decision_Log]]
 16. [[16_Implementation_Prompt_Sequence]]
 17. [[17_Master_Inventory]]
-18. [[18_Repository_Starter_Files]]
+18. [[18_Jules_Protected_Implementation_Workflow]]
+19. [[19_Prototype_Scraper_Workflow]]
+
+## Architecture navigation
+
+- [[architecture/01_Acquisition_Routing_and_Session_Sync_Prototype]]
+- [[architecture/02_Offline_Parser_Resilience_and_Scrapling_Validation]]
+- [[architecture/03_Protected_Session_Broker_Prototype]]
+
+## Source and experiment navigation
+
+- [[sources/01_Boat24]]
+- [[experiments/01_[Gemini]_Experiment_Log_Ledger|Experiment Log Ledger]]
+- [[templates/Source Note Template]]
+- [[templates/Experiment Log Template]]
+- [[templates/Jules Repair Prompt Template]]
+
 ## Project rule
 
-> ==Obsidian is the project memory and operating manual. GitHub and the databases are the technical source of truth.==
+> ==Obsidian is the project memory and operating manual. Running code, tests, migrations, manifests and telemetry are the technical source of truth.==
 
 ## Current target sources
 
-- TheYachtMarket
-- Boat24
-- MarineOne / YachtBrokerage
-- Croatian Yachting
-- iNautia
-  - alternatives: Band of Boats, YachtFocus
-- Njuškalo Nautika
-  - alternatives: Burza Nautike, Index Oglasi/Nautika, Mornar.net
+1. Boat24
+2. Croatian Yachting
+3. MarineOne / YachtBrokerage
+4. Njuškalo Nautika
+5. TheYachtMarket
+6. iNautia
+
+Alternatives remain documented but do not replace an approved target without a recorded decision.
 
 ## Current phase
 
-The source-neutral architecture and YPI data foundation are being prepared before full Genesis scraping starts.
+Steps 1–2 of `scraper_project` are complete. The immediate action is Step 3: prove the isolated Docker and dual-node synthetic fixture flow.
+
+The new acquisition, Session Broker and parser-resilience notes are prototype blueprints for later steps. They do not replace the existing approved acquisition implementation and are not production-approved until supported by experiments and accepted by Vuk.
 
 See [[14_Project_Status_and_Next_Actions]] for the current checkpoint.

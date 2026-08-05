@@ -12,7 +12,7 @@ This note records architecture decisions so they are not silently changed later.
 
 **Decision:** Gemini and Antigravity own the protected acquisition implementation. Codex and ChatGPT do not replace it.
 
-**Status:** superseded by D-009
+**Status:** superseded by D-009 and D-010
 
 ## D-003 — Source-neutral core
 
@@ -38,9 +38,9 @@ This note records architecture decisions so they are not silently changed later.
 
 **Status:** current budget policy
 
-## D-007 — Second brain timing
+## D-007 — Second Brain timing
 
-**Decision:** Build the Obsidian second brain now as a lightweight control and knowledge system. Delay AI/RAG integration until the scraper foundation and YPI core are stable.
+**Decision:** Use the Second Brain now as a lightweight control and knowledge system. Delay complex AI/RAG integration until the scraper foundation and YPI core are stable.
 
 **Status:** canonical
 
@@ -50,27 +50,54 @@ This note records architecture decisions so they are not silently changed later.
 
 **Decision:** Use SQLite with WAL mode, one source-neutral writer boundary, persistent leases, bounded retries, checkpoints and immutable successful snapshot manifests.
 
-**Reason:** The scraper must recover safely from crashes and preserve crawl state on the local worker PC.
-
-**Effect on architecture:** Step 2 is complete. SQLite runtime persistence uses packaged migrations, WAL mode, one authoritative queue owner, durable lifecycle transitions, bounded retries, checkpoints, immutable successful snapshots, proxy accounting and versioned dataset manifests.
-
-**Evidence:** Commits `4c0debe`, `12f900a` and `cddb3e4`; 29 passing tests; GitHub Actions green.
-
 **Status:** canonical
 
 ## D-009 — Gemini-authored acquisition with Vuk-controlled commits
 
 **Date:** 2026-07-29
 
-**Decision:** Gemini owns source-specific acquisition research, design and code authoring. Gemini returns complete files or patches but does not commit. Vuk controls application, commits, pilot execution and merges. ChatGPT reviews architecture. Codex validates integration and may make narrow Vuk-approved compatibility fixes.
+**Decision:** Gemini owns source-specific research, design and protected code authoring; Vuk controls application and commits.
 
-**Reason:** This removes an unnecessary Gemini-to-Antigravity handoff and gives Vuk direct control over every protected acquisition change.
+**Reason:** This removed the Gemini-to-Antigravity handoff.
 
-**Alternatives considered:** Separate Gemini design and Antigravity implementation roles.
+**Status:** superseded by D-010
 
-**Effect on architecture:** The protected acquisition boundary remains unchanged. Only the ownership and code-delivery workflow change. Codex remains source-neutral and YPI remains authoritative for canonical normalization, final dedupe, valuation eligibility and scoring.
+## D-010 — Gemini blueprints and Jules protected implementation
+
+**Date:** 2026-08-05
+
+**Decision:** Gemini owns source research, source-specific acquisition blueprints, experiment plans and Second Brain maintenance. Jules owns protected acquisition implementation and protected tests inside the existing protected paths. Vuk applies, commits and merges accepted Jules work. ChatGPT and Codex may inspect and test protected code but must return implementation defects as precise Jules repair prompts rather than editing or replacing the protected implementation directly.
+
+**Reason:** Preserve a strict design-to-implementation boundary while keeping Vuk as the merge gate and preventing reviewers from silently overwriting source-specific work.
+
+**Alternatives considered:** Gemini both designs and implements; Antigravity implementation; direct Codex compatibility edits inside protected code.
+
+**Effect on architecture:** Protected paths and shared contracts remain unchanged. Existing approved protected implementations are preserved. Antigravity remains deprecated. Codex remains the source-neutral platform and offline parser owner.
 
 **Status:** canonical
+
+## D-011 — Prototype and evidence maturity
+
+**Date:** 2026-08-05
+
+**Decision:** Architecture and source behaviour use four maturity levels: `hypothesis`, `prototype_decision`, `experiment_supported`, and `production_approved`.
+
+A prototype decision may be fully specified and implemented for testing, but it is not treated as proven. Experiment support requires reproducible evidence. Production approval requires defined acceptance criteria and Vuk's decision.
+
+**Effect on architecture:** Session Sync, Session Broker, Scrapling and other unproven components remain visible without silently replacing approved production components.
+
+**Status:** canonical
+
+## D-012 — Acquisition, session coordination and parser boundary
+
+**Date:** 2026-08-05
+
+**Decision:** Protected acquisition ends at `DiscoveryObservation`, `RawFetchArtifact` and `FetchTelemetry`. Protected session coordination may manage source-specific session state and bounded refresh attempts, but the Codex-owned source-neutral orchestrator remains the sole owner of job retries, requeue and checkpoints. Offline extraction, regex fallback, adaptive selector/fingerprint promotion and source-readiness logic remain in the Codex-owned parser and quality layers.
+
+**Reason:** Preserve immutable raw evidence, reproducibility and one authoritative queue owner.
+
+**Status:** canonical
+
 ## New decision template
 
 ### D-XXX — Title

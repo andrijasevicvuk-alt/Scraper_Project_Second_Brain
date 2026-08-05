@@ -3,69 +3,44 @@
 ## Current known state
 
 - YPI foundation Steps 1–3 are complete.
-- YPI Step 4 should implement extraction, normalization, validation and publication boundaries.
-- The scraper project has an initial architecture and source research notes.
+- `scraper_project` Step 1 source-neutral foundation is merged.
+- Step 2 SQLite persistence and hardening are complete and merged.
+- Step 2 includes packaged migrations, crawl/partition lifecycles, one authoritative queue, leases, bounded retries, checkpoints, immutable snapshot manifests, parser-run state, proxy accounting, complete dataset manifests, backups and recovery.
+- The synthetic suite has 29 passing tests and GitHub Actions was green at the recorded checkpoint.
 - The dual-node concept is defined but must be operationally proven.
-- The routine architecture is weekly hybrid-delta discovery with conditional detail fetching.
-- Gemini-authored acquisition code must remain protected; Vuk controls its application and commits.
-- Codex should build source-neutral infrastructure and offline processing.
-- Step 1 source-neutral foundation is merged into `main`.
-- Step 2 SQLite persistence and hardening are complete and merged into `main`.
-- Step 2 includes packaged migrations, crawl and partition lifecycles, queues, leases, bounded retries, checkpoints, immutable snapshot manifests, parser-run state, proxy accounting, complete dataset manifests, backups and recovery.
-- The installed package and Docker image use the same canonical packaged migrations.
-- The complete synthetic test suite contains 29 passing tests and GitHub Actions is green.
+- Gemini created acquisition, Session Broker and parser-resilience blueprints. They are preserved as prototype decisions or experiments, not production replacements.
+- Gemini owns source research and blueprints.
+- Jules owns new protected acquisition implementation and protected repairs.
+- ChatGPT and Codex review protected code but return implementation changes to Jules.
+- Codex owns source-neutral infrastructure, the authoritative queue and offline processing.
+
 ## Immediate next action
 
-Begin Step 3 from [[16_Implementation_Prompt_Sequence]]: implement the isolated Docker and dual-node fixture flow, then perform physical two-machine validation when the home PC is available.
+Begin Step 3 from [[16_Implementation_Prompt_Sequence]]: extend the existing Docker scaffold, implement the isolated synthetic worker flow and then perform physical two-machine validation when the home PC is available.
 
-### 1. Freeze repository ownership
+Step 3 does not implement the Session Sync Bridge, Session Broker, Scrapling resilience or live source access.
 
-Create or update the root `AGENTS.md` with:
+## Later source sequence
 
-- protected paths
-- Codex-safe paths
-- shared contracts
-- secret rules
-- source-of-truth rules
+1. ChatGPT completes the Boat24 source specification.
+2. Gemini finalizes the Boat24 prototype blueprint.
+3. Jules implements the protected Boat24 prototype and tests.
+4. Vuk applies the protected files to a feature branch.
+5. ChatGPT and Codex review; protected defects return to Jules.
+6. Codex builds the offline Boat24 parser from fixtures.
+7. Controlled experiments validate acquisition, session, bandwidth and parser-resilience hypotheses.
+8. Vuk runs staged pilots.
+9. ChatGPT audits Genesis readiness.
+10. Vuk approves or rejects production and Genesis progression.
 
-### 2. Audit the real repository
+## Current blockers and unknowns
 
-Create the private scraper_project repository with the approved AGENTS.md and boundary docs, then ask Codex to inspect the initial repository and implement the source-neutral contracts and scaffold only.
+- Step 3 physical dual-node validation requires access to the home PC.
+- Actual proxy bytes per source remain unmeasured.
+- Source volume and defense-profile claims require recorded evidence.
+- The Session Sync Bridge and Session Broker are not experiment-supported yet.
+- Scrapling adaptive repair is not production-approved.
+- Boat24 production acquisition and parser versions do not yet exist.
+- Before Step 5–6 implementation, synchronize `scraper_project/AGENTS.md`, `README.md` and `docs/project-boundaries.md` with D-010 so repository rules no longer assign protected code authoring to Gemini.
 
-### 3. Implement source-neutral contracts
-
-Do not begin a full Genesis crawl before the shared contracts and persistent job state exist.
-
-### 4. Prove the dual-node fixture flow
-
-Run a synthetic or saved-fixture job from the ThinkPad through the home PC and prove resume after restart.
-
-### 5. Prepare Boat24 source specification
-
-Use [[templates/Source Note Template]].
-
-### 6. Run a controlled acquisition sample
-
-Gemini produces the protected adapter code, fixture plan and telemetry requirements. Vuk applies and controls the code. ChatGPT reviews architecture, and Codex validates source-neutral integration.
-
-### 7. Build Boat24 offline parser
-
-Codex uses saved fixtures and reports field coverage.
-
-### 8. Run staged pilots
-
-- 20–50 listings
-- 100 listings
-- optional 1,000 listings
-
-### 9. Approve or reject Genesis readiness
-
-Use measured proxy use, parser coverage, retry rate, snapshot integrity and quality distribution.
-
-## Current blockers to record
-
-- dual-node note was previously empty and needs implementation evidence
-- actual proxy bytes per source are not yet measured
-- Genesis completion accounting is not yet implemented
-- Step 3 physical dual-node validation requires access to the home PC
-- actual proxy bytes per source remain unmeasured until controlled live pilots
+These unknowns do not block Step 3. They are resolved through the prototype and experiment sequence rather than more speculative architecture.

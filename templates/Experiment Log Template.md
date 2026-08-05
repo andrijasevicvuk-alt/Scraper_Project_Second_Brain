@@ -1,38 +1,75 @@
 ---
 status: experiment
-date:
+experiment_id:
 source:
 owner:
-related_commit:
+date:
+related_prototype_version:
+related_acquisition_version:
+related_parser_version:
 ---
 
 # Experiment — TITLE
 
 ## Question
 
-## Setup
+## Starting maturity
 
-## Controlled limits
+- component or claim:
+- current maturity: `hypothesis` / `prototype_decision` / `experiment_supported`
+- proposed maturity after success:
 
-- maximum discovery records:
-- maximum detail fetches:
-- maximum attempts:
-- proxy budget:
+## Baseline
 
-## Result
+## Hypothesis
 
-## Measurements
+## Variables and controls
 
-- requests:
-- success rate:
-- bytes used:
-- average list-page bytes:
-- average detail-page bytes:
-- parser field coverage:
-- errors:
+- independent variable:
+- controlled variables:
+- sample and fixtures:
+- software and configuration versions:
+
+## Safety and limits
+
+- request/sample limit:
+- proxy-byte limit:
+- runtime limit:
+- stop conditions:
+- secret-handling rules:
+
+## Exact procedure and commands
+
+## Success criteria
+
+## Failure criteria
+
+## Evidence produced
+
+- fixture or snapshot paths:
+- logs or reports:
+- telemetry:
+- checksums:
+
+## Results
 
 ## Interpretation
 
-## Decision
+State only what the experiment supports. Record conditions and limitations.
 
-## Next action
+## Maturity decision
+
+- previous maturity:
+- proposed maturity:
+- decision:
+- Vuk approval required:
+- approval record:
+
+## Implementation consequence
+
+- files or components affected:
+- Jules prompt required:
+- Codex task required:
+- rollback or retained baseline:
+
+## Second Brain updates
