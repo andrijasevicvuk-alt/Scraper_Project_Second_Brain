@@ -135,3 +135,15 @@ Mitigation:
 - code and tests remain in Git;
 - blueprints and repair prompts are explicit;
 - agents can be replaced without replacing the architecture.
+
+### R13 — silent architecture replacement
+
+**Description:** A reviewer removes, downgrades or replaces an existing acquisition idea because it cannot implement or support the tactic.
+
+**Mitigation:** D-013, Vuk approval, protected ownership boundaries and mandatory conflict reporting.
+
+### R14 — uncontrolled experimental-tool accumulation
+
+**Description:** Every possible tool is added to each source adapter without evidence.
+
+**Mitigation:** Gemini evaluates tools per source, Jules implements only approved components, and promotion requires controlled experiments.

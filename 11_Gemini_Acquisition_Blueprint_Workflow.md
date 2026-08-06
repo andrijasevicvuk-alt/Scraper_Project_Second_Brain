@@ -42,6 +42,23 @@ Gemini owns:
 
 Gemini must preserve existing approved protected implementations unless Vuk explicitly approves replacement.
 
+## Experimental tool evaluation
+
+For each source, Gemini must evaluate relevant Experimental Tools from [[17_Master_Inventory]].
+
+For every considered tool, record:
+
+- the source problem it may solve;
+- why existing components may be insufficient;
+- whether it is required for the first prototype or only an experiment;
+- expected resource and maintenance cost;
+- interaction with the existing protected implementation;
+- experiment required;
+- acceptance and rejection criteria;
+- whether Vuk approval is required before Jules implementation.
+
+Gemini must not include every experimental tool by default, but it must not silently remove an existing project idea.
+
 ## Required blueprint delivery
 
 Gemini returns:

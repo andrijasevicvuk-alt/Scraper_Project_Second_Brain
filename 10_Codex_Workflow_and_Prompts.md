@@ -6,12 +6,21 @@ Codex should receive one narrow source-neutral task at a time.
 
 Codex must:
 
-1. read `AGENTS.md` and relevant docs;
-2. list intended file changes;
-3. identify whether protected paths are involved;
-4. avoid direct protected-path edits;
-5. run appropriate tests;
-6. report architectural conflicts instead of changing them silently.
+1. inspect the relevant current files in the Scraper Project Second Brain repository;
+2. inspect the relevant files, tests, migrations and current tree in `scraper_project`;
+3. identify the current implementation step from `16_Implementation_Prompt_Sequence.md`;
+4. verify that the requested work belongs to that step;
+5. identify conflicts between repository code and the Second Brain;
+6. classify each conflict as:
+   - implementation problem;
+   - documentation problem;
+   - both;
+7. identify strengths, weaknesses, risks and missing evidence;
+8. list intended file changes;
+9. identify whether protected paths are involved;
+10. avoid direct protected-path edits;
+11. run appropriate tests;
+12. propose new ideas only when they solve a concrete evidence-supported weakness or opportunity.
 
 ## Safe Codex sequence
 
@@ -54,6 +63,8 @@ When Codex identifies a protected defect, it must provide:
 
 Codex may repair Codex-owned integration code. Protected implementation changes return to Jules.
 
+Codex must not remove, reject, replace or redesign an experimental or protected acquisition idea merely because it cannot assist with the tactic. It must report the limitation and preserve the existing plan.
+
 ## Session Broker boundary
 
 Codex owns the authoritative crawl queue, job retries and canonical runtime migrations.
@@ -68,3 +79,23 @@ Codex must not:
 - receive real proxy credentials in a prompt;
 - commit runtime databases, snapshots, cookies or session state;
 - write secrets into examples or logs.
+
+## Mandatory Codex response section
+
+Every Codex project response must end with:
+
+### Cross-repository verification
+
+- Second Brain files checked:
+- Technical repository files checked:
+- Current implementation step:
+- Step alignment:
+- Code/documentation conflicts:
+- Strengths:
+- Weaknesses:
+- Risks:
+- Missing evidence:
+- Problem classification:
+- Protected implementation impact:
+- Jules repair prompt required:
+- Proposed evidence-supported improvements:

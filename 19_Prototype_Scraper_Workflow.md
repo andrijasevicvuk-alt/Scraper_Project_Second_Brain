@@ -3,7 +3,6 @@ status: canonical
 owner: Vuk / ChatGPT
 last_updated: 2026-08-05
 ---
-
 # Prototype Scraper Workflow
 
 ## Decision
@@ -53,6 +52,10 @@ A recorded controlled experiment supports the claim within its tested conditions
 A versioned source adapter/parser configuration meets defined pilot criteria and is explicitly accepted by Vuk for routine use.
 
 ## Definition of a complete source prototype
+
+A source prototype may include conditional experimental components when Gemini determines that the source requires them and Vuk approves the test.
+
+The generic prototype does not activate every experimental component by default. It preserves them as available source-specific options until experiments establish their value.
 
 A source-specific prototype should be theoretically complete for one website within a bounded test scope. It includes:
 

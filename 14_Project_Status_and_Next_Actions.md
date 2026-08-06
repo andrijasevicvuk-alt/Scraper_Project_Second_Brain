@@ -16,9 +16,11 @@
 
 ## Immediate next action
 
-Begin Step 3 from [[16_Implementation_Prompt_Sequence]]: extend the existing Docker scaffold, implement the isolated synthetic worker flow and then perform physical two-machine validation when the home PC is available.
+Begin Step 3A from [[16_Implementation_Prompt_Sequence]]: extend and validate the existing source-neutral Docker scaffold using repository work, synthetic fixtures and CI.
 
-Step 3 does not implement the Session Sync Bridge, Session Broker, Scrapling resilience or live source access.
+Physical ThinkPad-to-Home-PC validation is Step 3B and is deferred until Vuk has access to the Home PC.
+
+Step 3 does not implement, remove or evaluate protected acquisition tactics, experimental interaction tools, Session Sync, Session Broker, Scrapling resilience or live source access.
 
 ## Later source sequence
 
@@ -35,7 +37,7 @@ Step 3 does not implement the Session Sync Bridge, Session Broker, Scrapling res
 
 ## Current blockers and unknowns
 
-- Step 3 physical dual-node validation requires access to the home PC.
+- Step 3B physical dual-node validation requires access to the Home PC. This does not block Step 3A repository and CI implementation.
 - Actual proxy bytes per source remain unmeasured.
 - Source volume and defense-profile claims require recorded evidence.
 - The Session Sync Bridge and Session Broker are not experiment-supported yet.

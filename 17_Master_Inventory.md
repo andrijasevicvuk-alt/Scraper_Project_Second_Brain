@@ -73,6 +73,29 @@ Design maturity is recorded separately as:
 | Crawlee | Possible orchestration/acquisition component | candidate | hypothesis | Must not introduce a second retry owner |
 | DataImpulse residential proxies | Residential proxy traffic | active | production-approved provider choice | Record bytes per source and run |
 
+
+## Experimental Tools
+
+These tools and techniques remain part of the project’s research space. Their presence here does not mean they are required, implemented, experiment-supported or production-approved.
+
+Gemini researches whether they are useful for a specific source. Jules implements them only after Vuk approves the source blueprint. ChatGPT and Codex may review and suggest optimizations, but they must not silently remove, reject or replace them.
+
+| Tool or technique | Intended role | Status | Maturity | Research owner | Implementation owner |
+|---|---|---|---|---|---|
+| Playwright | Browser rendering, interaction, tracing and fixture capture | experimental | hypothesis | Gemini | Jules |
+| OxyMouse | Candidate human-like mouse path generation | experimental | hypothesis | Gemini | Jules |
+| HumanMoveMouse | Candidate desktop-level mouse movement generation | experimental | hypothesis | Gemini | Jules |
+| Jittery scrolling routines | Source-specific nonlinear scrolling and lazy-load interaction | experimental | hypothesis | Gemini | Jules |
+| CDP `Input.dispatchKeyEvent` | Source-specific low-level keyboard interaction | experimental | hypothesis | Gemini | Jules |
+| Header-locality synchronisation | Align source-visible locale and request profile with approved proxy configuration | experimental | hypothesis | Gemini | Jules |
+| Brotli/Zstandard response configuration | Reduce response bytes where the selected client and server support it | experimental | hypothesis | Gemini | Jules |
+| Route asset interception | Reduce browser proxy traffic using measured source-specific request rules | experimental | hypothesis | Gemini | Jules |
+| Stagehand | AI-assisted browser research, interaction or candidate element-location experiments | experimental | hypothesis | Gemini | Jules |
+| AgentQL | Semantic element-location or independent extraction-candidate experiments | experimental | hypothesis | Gemini | Jules |
+| Loguru telemetry | Alternative protected acquisition logging experiment | experimental | hypothesis | Gemini | Jules |
+
+Experimental tools are not rejected merely because ChatGPT or Codex cannot implement or recommend a particular tactic. Removal, rejection, replacement or production promotion requires evidence and Vuk’s explicit decision.
+
 ## Offline parser and resilience tools
 
 | Component | Role | Status | Maturity | Owner |

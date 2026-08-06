@@ -98,6 +98,20 @@ A prototype decision may be fully specified and implemented for testing, but it 
 
 **Status:** canonical
 
+## D-013 — No silent removal or replacement of project ideas
+
+**Date:** 2026-08-06
+
+**Decision:** Existing acquisition ideas, experimental tools and protected tactics remain documented until controlled evidence and Vuk’s explicit decision reject, replace, deprecate or promote them.
+
+ChatGPT and Codex may recommend optimizations, identify risks and prepare repair prompts, but they must not silently remove, downgrade or replace Gemini-designed acquisition ideas or Jules-authored protected implementation.
+
+An agent’s inability to assist with a tactic is not technical evidence that the tactic is unnecessary or invalid.
+
+**Effect on architecture:** Gemini retains source research and blueprint ownership. Jules retains protected implementation ownership. ChatGPT and Codex retain architecture, source-neutral platform, parser and review responsibilities.
+
+**Status:** canonical
+
 ## New decision template
 
 ### D-XXX — Title

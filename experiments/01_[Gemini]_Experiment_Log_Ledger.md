@@ -86,4 +86,21 @@ Every maturity change must record:
 - rollback version;
 - whether Vuk approval is required and received.
 
+### Experimental acquisition and interaction tools
+
+- Playwright browser-runtime comparison;
+- Nodriver browser-runtime comparison;
+- OxyMouse movement experiment;
+- HumanMoveMouse movement experiment;
+- jittery-scrolling and lazy-load experiment;
+- CDP keyboard-event experiment;
+- request-profile and header-locality experiment;
+- Brotli/Zstandard byte-reduction experiment;
+- source-specific asset-interception experiment;
+- Stagehand browser-research experiment;
+- AgentQL semantic-location experiment;
+- Loguru protected-telemetry comparison.
+
 Use [[templates/Experiment Log Template]] for each experiment.
+
+

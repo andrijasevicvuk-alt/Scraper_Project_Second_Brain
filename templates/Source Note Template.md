@@ -56,6 +56,13 @@ last_updated:
 
 Acquisition ends at `DiscoveryObservation`, `RawFetchArtifact` and `FetchTelemetry`.
 
+## Experimental components considered
+
+| Component | Problem addressed | Status | Evidence | Decision | Experiment link |
+|---|---|---|---|---|---|
+
+Experimental components remain available unless Vuk explicitly rejects, replaces or deprecates them.
+
 ## Protected implementation — Jules
 
 - prototype version:

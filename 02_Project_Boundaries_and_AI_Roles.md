@@ -4,6 +4,8 @@ The project uses ==Strict Separation of Concerns== so one agent does not silentl
 
 ## Vuk — product owner and merge gate
 
+Vuk also decides whether an experimental component is retained, rejected, replaced or promoted. No agent may remove or downgrade an existing project idea merely because that agent cannot assist with its implementation.
+
 Vuk decides:
 
 - which source is active;
@@ -42,6 +44,8 @@ When ChatGPT identifies a protected-code problem, it must return:
 5. a precise implementation prompt for Jules;
 6. tests or evidence required to accept the repair.
 
+ChatGPT suggestions must optimize the accepted architecture and workflow. ChatGPT must not silently replace Gemini’s source strategy, remove experimental ideas or redefine a technical limitation as proof that an idea is unnecessary.
+
 ## Gemini — source research, acquisition blueprints and Second Brain
 
 Gemini owns source-specific research and design for each source approved by Vuk.
@@ -58,6 +62,9 @@ Gemini should:
 - define telemetry, fixture and pilot requirements;
 - maintain source notes, experiment plans and architecture blueprints;
 - hand Jules an implementation-ready protected file map and acceptance plan.
+- evaluate experimental tools and human-interaction components for each source;
+- record why each component is selected, deferred, rejected or left untested;
+- preserve prior project ideas until evidence and Vuk’s decision justify changing them.
 
 Gemini does not implement, commit, push, open pull requests or merge protected production code in the current workflow.
 
@@ -75,6 +82,8 @@ Jules owns:
 - source-specific session and browser runtime code;
 - source-specific acquisition commands and runbooks;
 - repairs to Jules-authored protected code after review findings.
+- implement Vuk-approved experimental components included in the Gemini blueprint;
+- preserve existing protected tactics unless the approved task explicitly replaces them.
 
 Jules implements the approved Gemini blueprint and shared contracts. Jules must not silently redesign the source strategy. If the blueprint is impossible, contradictory or unsafe, Jules reports the conflict to Vuk and Gemini before changing the design.
 
@@ -100,6 +109,8 @@ Codex owns:
 Codex may inspect and test Jules-authored protected code through its contracts. Codex must not directly edit, replace, reformat or recreate Jules' protected implementation.
 
 When Codex finds a protected-code problem, it follows the same reviewer-to-Jules repair workflow used by ChatGPT. Codex may fix source-neutral integration code in Codex-owned paths, but protected repairs return to Jules.
+
+Codex suggestions must improve compatibility, reliability, testing or integration without replacing Gemini’s approved acquisition strategy. When Codex cannot assist with a protected tactic, it must report that limitation and leave the tactic and architecture unchanged.
 
 ## Antigravity — deprecated role
 

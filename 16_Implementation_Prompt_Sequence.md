@@ -384,6 +384,31 @@ Implement the isolated local-worker infrastructure for `scraper_project`.
 
 Read and obey `AGENTS.md`.
 
+Before editing:
+
+1. Check the relevant current Second Brain files.
+2. Confirm that Step 3 is the current implementation step.
+3. Inspect the current technical repository tree, Docker files, runtime documentation and tests.
+4. Report any conflict between the Second Brain and repository documentation.
+5. Distinguish documentation conflicts from implementation defects.
+
+Do not add or evaluate source-acquisition dependencies during Step 3.
+
+Specifically, do not implement or remove:
+
+- `curl_cffi`;
+- Nodriver;
+- Playwright;
+- Scrapling;
+- Crawlee;
+- Stagehand;
+- AgentQL;
+- OxyMouse;
+- HumanMoveMouse;
+- source-specific scrolling, keyboard or header-locality behaviour.
+
+These remain later source-specific or experimental concerns.
+
 Do not modify protected acquisition code and do not make live requests.
 
 Extend the existing root `Dockerfile` and `docker-compose.yml` rather than creating competing Docker scaffolding.
@@ -431,6 +456,22 @@ Document how Vuk can:
 4. restart it;
 5. prove the queue resumes.
 
+### Step 3A — Repository and CI validation
+
+Codex implements and validates everything that can be completed using the repository, synthetic fixtures, Docker configuration and CI.
+
+### Step 3B — Physical dual-node validation
+
+This is performed later by Vuk when the Home PC is available:
+
+- start the worker on the Home PC;
+- inspect it from the ThinkPad;
+- stop and restart it;
+- verify persistent runtime state;
+- verify snapshots survive;
+- verify queue resume.
+
+Step 3A may be completed while Step 3B remains pending. Step 3 is fully complete only after both pass.
 ### Expected result
 
 The existing project scaffold runs inside an isolated container, persists state and recovers after interruption.

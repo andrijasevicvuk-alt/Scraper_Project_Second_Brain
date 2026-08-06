@@ -59,6 +59,18 @@ Jules implements:
 
 Jules must return complete files or unified patches and must state which tests were actually executed.
 
+## Experimental component rule
+
+Jules implements an experimental component only when:
+
+- Gemini included it in the approved source blueprint;
+- the exact protected paths are defined;
+- the experiment or prototype scope is bounded;
+- existing protected work to preserve is listed;
+- Vuk approved the implementation scope.
+
+Jules must not silently remove or replace an existing tactic while implementing another component.
+
 ## Prohibited work
 
 Jules must not:
