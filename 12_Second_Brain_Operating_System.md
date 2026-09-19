@@ -18,6 +18,8 @@ The Second Brain is a human-readable control plane for architecture, source know
 
 Do not build a complex autonomous memory or RAG platform before the scraper and YPI core are stable.
 
+The Second Brain is not an activity log. Do not record every command, conversation, small test or code change. Add information only when it materially helps future understanding, debugging, maintenance, handoff or continuation of the project.
+
 ## Source-of-truth hierarchy
 
 1. running code and tests;
@@ -61,6 +63,44 @@ Before creating a new note:
 4. identify anything it supersedes;
 5. preserve useful historical evidence in `archive/` when necessary.
 
+## Second Brain transparency and selective updates
+
+Nothing may be added, removed, rewritten, reorganized or otherwise changed in the Second Brain without Vuk being told.
+
+Second Brain updates should be few and durable. Update it when information is genuinely useful for future guidance, such as:
+
+- an important architectural or technical decision;
+- a material project-state or roadmap change;
+- a meaningful milestone;
+- a significant incident or resolution;
+- a durable constraint, known issue or recovery procedure;
+- information another ChatGPT, Codex, Gemini or Jules session needs to continue safely.
+
+Do not make wording, formatting or structural changes merely for cosmetic cleanup.
+
+Before a change, identify where practical:
+
+- the file and section;
+- why the change is necessary;
+- what will be added;
+- what will be changed;
+- what will be removed, if anything;
+- whether roadmap, architecture, project state, assumptions, decisions or next steps are affected.
+
+After every Second Brain modification, report the same information clearly. If nothing changed, state explicitly that no Second Brain changes were made.
+
+Do not silently rewrite history. When a previous assumption or decision becomes wrong, preserve useful historical context and record what superseded it, why, and what the current decision is.
+
+Git history is the primary lightweight Second Brain change log. The Decision Log records important decisions. Do not create a duplicate activity-log system unless Git history proves insufficient.
+
+Where practical, significant Second Brain updates should have an obvious documentation commit such as:
+
+`docs(second-brain): record remote worker operating model`
+
+Small documentation changes directly associated with a feature may share that feature commit, but they must still be reported to Vuk.
+
+Before ending any major project task, include a short Second Brain status stating either that no changes were required or which files/sections were updated and why.
+
 ## Session rule for ChatGPT
 
 For project work, ChatGPT should:
@@ -80,3 +120,5 @@ Gemini should maintain source and architecture blueprints, label maturity honest
 ## Session rule for Codex
 
 Codex should implement source-neutral infrastructure and offline parsing, test protected code through contracts and return protected defects to Jules.
+
+Codex must not silently modify the Second Brain as a side effect of another task. Second Brain edits require explicit reporting under the transparency rules above.

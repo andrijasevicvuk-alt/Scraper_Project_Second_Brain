@@ -112,6 +112,44 @@ An agent’s inability to assist with a tactic is not technical evidence that th
 
 **Status:** canonical
 
+## D-014 — Second Brain transparency and selective updates
+
+**Date:** 2026-09-19
+
+**Decision:** No Second Brain modification may be hidden from Vuk. Updates are made only when they preserve durable information useful for project continuation, debugging, maintenance, handoff, major milestones, incidents, decisions, constraints or material project-state changes.
+
+Every Second Brain modification must identify the affected file/section, additions, modifications, removals, reason and effect on roadmap, architecture, project state, assumptions, decisions or next steps. If nothing changed, that must be stated explicitly.
+
+Previous decisions are not silently rewritten. Important superseded history is preserved and the new finding/current decision/reason are recorded.
+
+Git history is the lightweight Second Brain change log; the Decision Log records important decisions. Significant documentation updates should be identifiable in Git history rather than hidden inside unrelated work.
+
+**Reason:** Keep the Second Brain useful as a current project-management and handoff system without turning it into an activity log, while guaranteeing complete visibility into its evolution.
+
+**Alternatives considered:** Update after every small action; maintain a separate detailed change-log document; rely on undocumented agent discretion.
+
+**Effect on architecture:** No scraper technical architecture change. Project-governance and documentation workflow are tightened.
+
+**Status:** canonical
+
+## D-015 — Private remote administration and recovery baseline
+
+**Date:** 2026-09-19
+
+**Decision:** The current proposed pre-departure remote-administration baseline is private Tailscale transport to the existing OpenSSH service on `ypi-worker`, with no direct public exposure of SSH, Supabase, PostgreSQL, Docker APIs or development ports.
+
+The proposal also requires an off-machine restore-tested runtime backup and a simple local/physical recovery path for failures that cannot be fixed in-band.
+
+Tailscale SSH is not part of the initial baseline. It may be evaluated later as a second shell only with explicit port/policy planning because it intercepts tailnet TCP 22 and still shares the same Tailscale daemon, host network, power and disk failure domains.
+
+**Reason:** Vuk will not have physical access to the Home PC for approximately one month. Remote recoverability therefore becomes an operational architecture requirement.
+
+**Alternatives considered:** public OpenSSH with forwarding/DDNS; direct WireGuard; WireGuard through a VPS; Tailscale plus existing OpenSSH; a separate remote-KVM/power path.
+
+**Effect on architecture:** Adds a proposed operational-access and recovery layer around the existing dual-node worker. It does not change source acquisition, queue, parser or YPI boundaries and does not authorize Boat24 Step 4.
+
+**Status:** draft — approved as the current proposal for implementation/testing, but not production-approved until installed and passed outside-LAN, logout, reboot and recovery acceptance tests.
+
 ## New decision template
 
 ### D-XXX — Title

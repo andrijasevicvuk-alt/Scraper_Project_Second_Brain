@@ -472,6 +472,26 @@ This is performed later by Vuk when the Home PC is available:
 - verify queue resume.
 
 Step 3A may be completed while Step 3B remains pending. Step 3 is fully complete only after both pass.
+
+### Completion status — 2026-09-19
+
+Step 3 is complete.
+
+Recorded completion evidence:
+
+- Step 3A merged into `scraper_project` main through PR #5; the Home PC validated merge commit `14d864c`.
+- Step 3B was physically validated by Vuk using the real ThinkPad and Home PC.
+- ThinkPad → Home PC SSH control passed.
+- Native non-root Docker passed.
+- The synthetic end-to-end worker completed on the Home PC.
+- SQLite/runtime state survived container recreation and a full physical reboot.
+- Re-running the same run ID reused completed deterministic state without duplicate queue work, snapshot or batch creation.
+- An intentionally interrupted leased job expired, was recovered as abandoned and completed successfully.
+- Ubuntu boots automatically by default.
+- Windows 10 was manually selected and booted successfully, then a restart returned automatically to Ubuntu.
+
+The pre-departure remote-reliability work is a separate operational acceptance gate created after Step 3 completion. It does not reopen Step 3. Step 4 is not authorized until that gate passes or Vuk explicitly accepts the remaining operational risk.
+
 ### Expected result
 
 The existing project scaffold runs inside an isolated container, persists state and recovers after interruption.
