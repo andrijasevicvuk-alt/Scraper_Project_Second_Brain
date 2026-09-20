@@ -2,68 +2,140 @@
 
 ## Current known state
 
-- YPI foundation Steps 1–3 are complete.
+- YPI scraper foundation Steps 1–3 are complete.
 - `scraper_project` Step 1 source-neutral foundation is merged.
 - Step 2 SQLite persistence and hardening are complete and merged.
 - Step 2 includes packaged migrations, crawl/partition lifecycles, one authoritative queue, leases, bounded retries, checkpoints, immutable snapshot manifests, parser-run state, proxy accounting, complete dataset manifests, backups and recovery.
 - Step 3A isolated synthetic-worker repository work is complete and merged. The Home PC validated `scraper_project` main at merge commit `14d864c`.
-- Step 3B physical dual-node validation is complete as of 2026-09-19.
-- Step 3B verified ThinkPad-to-Home-PC SSH control, native non-root Docker, synthetic execution, persistence through container recreation and physical reboot, same-run idempotency, expired-lease recovery, Ubuntu default boot and successful manual Windows boot.
-- Step 3 is therefore complete.
-- A separate pre-departure reliability audit found that the Home PC is **not yet demonstrated ready for approximately one month of unattended off-site operation**. The main remaining acceptance gaps are off-LAN private access, host-wide sleep prevention, off-machine restore-tested runtime backup and recovery from power/boot/network failure.
-- The Step 3 result remains valid. Remote-readiness gaps are an operational acceptance gate, not a Step 3 failure.
-- Gemini created acquisition, Session Broker and parser-resilience blueprints. They are preserved as prototype decisions or experiments, not production replacements.
-- Gemini owns source research and blueprints.
-- Jules owns new protected acquisition implementation and protected repairs.
-- ChatGPT and Codex review protected code but return implementation changes to Jules.
-- Codex owns source-neutral infrastructure, the authoritative queue and offline processing.
+- Step 3B physical dual-node validation is complete.
+- Step 3 therefore remains complete; the later remote-readiness work did not reopen or redefine Step 3.
+
+### Step 3 completion evidence
+
+Step 3 demonstrated, with synthetic/local-only data:
+
+- ThinkPad control of the Home PC through SSH;
+- native non-root Docker operation;
+- source-neutral synthetic worker execution;
+- persistent SQLite/runtime state across container recreation;
+- persistence across a full physical Home-PC reboot;
+- same-run idempotency without duplicate queue work, snapshot creation or dataset-batch creation;
+- abandoned leased-job recovery after expiry;
+- persistent runtime layout under the named Docker volume `scraper_project_scraper-runtime`;
+- Ubuntu automatic default boot;
+- successful manual Windows 10 boot followed by automatic return to Ubuntu.
+
+The Step 3 runtime checkpoint still uses approximately:
+
+```text
+/app/runtime/
+├── database/scraper.sqlite
+├── checkpoints/
+├── snapshots/
+├── logs/
+└── exports/
+```
+
+## Pre-departure remote reliability gate
+
+**Status: passed/accepted on 2026-09-20 with documented residual physical-recovery risk.**
+
+The Home PC was prepared for approximately one month of remote-only access after Step 3.
+
+Verified acceptance evidence:
+
+- Tailscale installed on both machines;
+- Home PC Tailscale IP `100.108.39.117`;
+- ThinkPad Tailscale IP observed as `100.117.143.124`;
+- genuine off-LAN ThinkPad test passed over a phone hotspot;
+- DERP Frankfurt relay fallback worked when no direct Tailscale path was established;
+- existing OpenSSH remains the remote shell; Tailscale SSH remains disabled;
+- key-only SSH works;
+- password-only SSH is rejected;
+- root SSH login is disabled;
+- SSH syntax/effective-policy checks passed;
+- host-wide suspend, hibernate, hybrid sleep and suspend-then-hibernate are disabled;
+- after a controlled reboot and without local graphical login, `tailscaled`, `ssh`, `NetworkManager`, `docker` and `containerd` were active and enabled;
+- final root-disk check showed approximately 352 GiB available;
+- runtime volume identity remained unchanged;
+- runtime SQLite `PRAGMA quick_check` returned `ok`.
+
+### Backup and recovery acceptance
+
+A coherent recovery checkpoint was demonstrated:
+
+```text
+Home PC backup:
+/home/vuk/Backups/ypi/20260920-035331
+
+ThinkPad off-machine copy:
+C:\Users\HT-ICT\YPI-Backups\20260920-035331
+
+Isolated restore test:
+/home/vuk/RestoreTests/20260920-035331
+```
+
+Evidence:
+
+- SQLite backup created using the project's backup implementation;
+- snapshot, export, log and checkpoint directories copied into the backup set;
+- backup inventory and SHA-256 manifest created;
+- every recorded checksum validated;
+- backup SQLite `PRAGMA integrity_check` returned `ok`;
+- ThinkPad copy was confirmed with the expected 163840-byte database;
+- isolated restore through `restore_database()` succeeded;
+- restored SQLite `PRAGMA integrity_check` returned `ok`;
+- schema migrations `0001` and `0002` were preserved.
+
+### Docker unattended-log follow-up
+
+A scoped Docker Compose change was validated and committed locally in `scraper_project`:
+
+```text
+branch: chore/bounded-docker-logging
+commit: 85329f6
+policy: json-file, max-size 10m, max-file 3
+```
+
+At the remote-readiness checkpoint:
+
+- no scraper Compose services were running;
+- no containers needed recreation;
+- the runtime volume remained unchanged;
+- the branch had **not** yet been merged into `main`.
+
+Treat bounded Docker logging as prepared but not active on `main` until that branch is reviewed and merged.
 
 ## Immediate next action
 
-Complete the **pre-departure remote reliability acceptance gate** before unrelated scraper feature development.
+The remote-reliability gate no longer blocks source development.
 
-Current priorities are:
+The next project task is **Step 4 — prepare and approve the Boat24 source specification**.
 
-1. close the remaining privileged/read-only host evidence gaps;
-2. establish and test private off-LAN administration, with Tailscale → existing OpenSSH as the current proposed baseline;
-3. prevent host-wide suspend/hibernate;
-4. create and restore-test an off-machine runtime backup;
-5. establish a simple physical recovery boundary for failures that cannot be fixed in-band;
-6. verify SSH/private-service exposure safely;
-7. perform realistic outside-LAN, logout and reboot acceptance tests.
+Sequence:
 
-Do not begin Boat24 Step 4 until this remote-reliability gate has passed or Vuk explicitly accepts any remaining risk.
+1. ChatGPT reviews the current Second Brain and repository boundary.
+2. Prepare the Boat24 source specification without inventing protected implementation details.
+3. Preserve the existing role split:
+   - Gemini — source research and prototype blueprint;
+   - Jules — protected source-specific implementation and protected tests;
+   - Codex — source-neutral platform, offline parser and integration;
+   - Vuk — approval, application, commit and merge gate.
+4. Do not begin live Boat24 acquisition until the later source-specific experiment and pilot gates authorize it.
 
-The remote-readiness work must preserve the currently working Ubuntu/kernel/NVIDIA/Docker foundation and avoid unrelated upgrades or architecture changes immediately before departure.
+## Remaining operational risks
 
-## Later source sequence
+These do not reopen Step 3 or block Step 4, but they remain real:
 
-After the remote-reliability gate:
+- a total power loss, failed boot before networking, hardware failure or home-router/ISP failure cannot be repaired through Tailscale;
+- there is no independently tested out-of-band KVM/power-control path;
+- the physical fallback remains a trusted local helper following Vuk's simple power/restart instruction;
+- Tailscale/account/provider availability remains part of the remote-access failure domain;
+- the bounded Docker logging branch should be reviewed and merged before long unattended scraper workloads;
+- the 2026-09-20 backup is a recovery checkpoint, not a substitute for future periodic backups once live data starts accumulating;
+- ThinkPad/Windows local-only project state and any unrelated local databases still require their own normal backup discipline.
 
-1. ChatGPT completes the Boat24 source specification.
-2. Gemini finalizes the Boat24 prototype blueprint.
-3. Jules implements the protected Boat24 prototype and tests.
-4. Vuk applies the protected files to a feature branch.
-5. ChatGPT and Codex review; protected defects return to Jules.
-6. Codex builds the offline Boat24 parser from fixtures.
-7. Controlled experiments validate acquisition, session, bandwidth and parser-resilience hypotheses.
-8. Vuk runs staged pilots.
-9. ChatGPT audits Genesis readiness.
-10. Vuk approves or rejects production and Genesis progression.
-
-## Current blockers and unknowns
-
-Pre-departure operational unknowns:
-
-- Tailscale/private off-LAN access is not yet installed and externally tested.
-- Effective privileged SSH/firewall configuration still needs confirmation before hardening.
-- Host-wide sleep prohibition has not yet been implemented and accepted.
-- A real off-machine runtime backup plus isolated restore test has not yet been demonstrated.
-- Recovery after power loss, failed boot or complete home-network failure still depends on a physical helper or independently tested out-of-band capability.
-- ThinkPad/Windows local-only project state and any local Supabase state require their own inventory where relevant.
-- Docker logs currently lack configured rotation limits; this is a pre-unattended-workload reliability concern, not a Step 3 defect.
-
-Source-development unknowns retained for later steps:
+## Source-development unknowns retained for later steps
 
 - Actual proxy bytes per source remain unmeasured.
 - Source volume and defense-profile claims require recorded evidence.
@@ -71,6 +143,4 @@ Source-development unknowns retained for later steps:
 - Scrapling adaptive repair is not production-approved.
 - Boat24 production acquisition and parser versions do not yet exist.
 
-A previous status note said repository role documents still needed synchronization with D-010. That blocker is now superseded: current `scraper_project/AGENTS.md` and project-boundary documentation assign protected implementation to Jules. Preserve the earlier state in Git history rather than treating it as an active blocker.
-
-These source unknowns do not invalidate completed Step 3. They are resolved through the later prototype and experiment sequence.
+These unknowns are resolved through the source specification, prototype, controlled-experiment, pilot and Genesis sequence. They do not invalidate the completed foundation or remote-readiness acceptance.
