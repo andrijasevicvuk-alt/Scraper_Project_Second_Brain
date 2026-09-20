@@ -153,45 +153,59 @@ Mitigation:
 
 ## R15 — complete remote lockout from power or boot failure
 
-**Probability:** unknown / plausible during unattended operation.
+**Probability:** reduced for ordinary reboot; still plausible for hard power, boot or home-network failure.
 
 **Impact:** critical; the Home PC can become completely inaccessible.
 
-**Detection:** the worker stops responding from an independent external network and no in-band service is reachable.
+**Validated mitigation:** Ubuntu automatic default boot, controlled reboot recovery, boot-enabled networking/Tailscale/OpenSSH, no last-minute BIOS/kernel/NVIDIA changes, and a simple physical-helper procedure.
 
-**Prevention:** preserve the known-good boot path, avoid last-minute kernel/driver/BIOS changes, document power dependencies and establish a simple local recovery owner.
+**Residual boundary:** there is no independently tested out-of-band power/KVM path. If the machine is powered off, frozen before networking, unable to boot, or the home router/ISP is down, Tailscale cannot recover it.
 
-**Remote recovery:** only possible if an independently tested out-of-band path exists.
+**Physical recovery:** if Vuk asks and the PC is off, the local helper presses the power button once. If Vuk explicitly says it is frozen, hold the power button until off, wait 10 seconds, then press once. No terminal diagnosis is required.
 
-**Physical recovery:** trusted local person powers on or performs an explicitly requested simple restart; no terminal diagnosis.
+**Status:** mitigated with accepted manual fallback; residual risk remains.
 
 ## R16 — sleep, network, overlay or remote-auth failure removes access
 
-**Probability:** plausible.
+**Probability:** reduced after acceptance testing.
 
-**Impact:** high/critical depending on whether an alternate path remains.
+**Impact:** high/critical depending on whether another path remains.
 
-**Detection:** external reachability and service-status checks.
+**Validated mitigation:**
 
-**Prevention:** host-wide sleep prohibition, wired autoconnect, boot-enabled remote services, off-LAN reboot/logout tests, account/key-expiry review and narrow access policy.
+- Tailscale installed and boot-enabled;
+- genuine off-LAN ThinkPad test passed over a phone hotspot;
+- DERP relay fallback was observed and accepted;
+- existing OpenSSH is the shell boundary;
+- ThinkPad key-only login passed;
+- password SSH and root SSH login are disabled;
+- host-wide suspend, hibernate, hybrid sleep and suspend-then-hibernate are disabled;
+- `tailscaled`, `ssh`, `NetworkManager`, `docker` and `containerd` returned automatically after a controlled reboot without GUI login.
 
-**Remote recovery:** restart the failed service if another shell remains available.
+**Residual boundary:** Tailscale/account availability, home router/ISP and hardware remain shared failure domains.
 
-**Physical recovery:** wake/restart only when Vuk explicitly requests it.
+**Status:** operationally accepted for the university-away period.
 
 ## R17 — runtime exists as a single copy or backup cannot actually restore
 
-**Probability:** unknown until backup acceptance is complete.
+**Probability:** materially reduced.
 
 **Impact:** critical for queue, snapshots and collected data.
 
-**Detection:** backup-age/inventory checks and an isolated restore test.
+**Validated mitigation:**
 
-**Prevention:** coherent SQLite/artifact backups, checksums, off-machine copy and periodic restore validation.
+- coherent SQLite backup created through the project's backup mechanism;
+- snapshot/export/log/checkpoint artifacts included in the backup set;
+- SHA-256 manifest verified;
+- SQLite integrity check returned `ok`;
+- off-machine copy confirmed on the ThinkPad;
+- isolated restore through the project restore helper succeeded;
+- restored SQLite integrity check returned `ok`;
+- schema migrations `0001` and `0002` were preserved.
 
-**Remote recovery:** restore into a fresh target from a verified backup.
+**Accepted checkpoint:** Home-PC backup `/home/vuk/Backups/ypi/20260920-035331`; ThinkPad copy `C:\Users\HT-ICT\YPI-Backups\20260920-035331`.
 
-**Physical recovery:** disk recovery or hardware replacement if no valid remote copy exists.
+**Status:** mitigation validated. Future live-data operation still requires periodic fresh backups rather than relying indefinitely on this one checkpoint.
 
 ## R18 — unattended update, kernel or driver regression
 
@@ -201,11 +215,9 @@ Mitigation:
 
 **Detection:** package logs, boot/service health and recorded kernel/driver versions.
 
-**Prevention:** no opportunistic upgrades before departure, explicit no-automatic-reboot policy, controlled maintenance windows and preservation of known-good boot state.
+**Current mitigation:** preserve the known-good Ubuntu/kernel/NVIDIA/Docker foundation, avoid opportunistic upgrades immediately before or during the remote-only period, and perform controlled maintenance when recovery is available.
 
-**Remote recovery:** package/service rollback when SSH remains available.
-
-**Physical recovery:** local boot recovery if remote access is lost.
+**Status:** open operational risk; no regression was observed during remote-readiness acceptance.
 
 ## R19 — logs or generated runtime data fill the disk
 
@@ -213,13 +225,15 @@ Mitigation:
 
 **Impact:** high; database writes, containers and remote administration can fail.
 
-**Detection:** disk/inode checks plus Docker/application log-size monitoring.
+**Validated evidence:** final root-disk check showed approximately 352 GiB free; runtime volume remained approximately 204 KiB during acceptance.
 
-**Prevention:** Docker log rotation, application retention policy and free-space thresholds; never auto-prune the runtime volume.
+**Mitigation:** application free-space thresholds and bounded Docker logs. A per-service Compose configuration using `json-file`, `max-size: "10m"` and `max-file: "3"` was validated and committed locally on `scraper_project` branch `chore/bounded-docker-logging`, commit `85329f6`.
 
-**Remote recovery:** remove only approved expendable logs/cache and stop the offending process.
+**Important:** that logging branch was not yet merged into `main` at the acceptance checkpoint, so the limit is prepared but must not be treated as active on `main` until reviewed and merged.
 
-**Physical recovery:** local cleanup only if the disk state prevents remote login.
+**Remote recovery:** stop the offending workload and remove only approved expendable logs/cache; never auto-prune the runtime volume.
+
+**Status:** partially mitigated; merge/activation of the bounded-logging change remains a small follow-up before long unattended scraper runs.
 
 ## R20 — important ThinkPad/Windows/local-service state is not included in backup
 
