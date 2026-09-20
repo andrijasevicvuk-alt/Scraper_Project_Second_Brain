@@ -22,7 +22,7 @@ The ThinkPad should not be required to store every raw snapshot.
 
 ## Worker node — Home PC
 
-Verified/observed checkpoint on 2026-09-19:
+Verified/observed checkpoint on 2026-09-20:
 
 | Component | Specification / state |
 |---|---|
@@ -37,7 +37,7 @@ Verified/observed checkpoint on 2026-09-19:
 | SSD | WDC 1 TB nominal / 931.5 GiB observed |
 | HDD | Seagate 3 TB nominal / about 2.7 TiB observed; NTFS and currently unmounted |
 | Docker | Native Docker Engine 29.8.1; Docker Compose 5.5.1; non-root use by `vuk` verified |
-| SSH | OpenSSH system service enabled; ThinkPad-to-Home-PC key authentication verified on LAN |
+| SSH | OpenSSH enabled; ThinkPad key-only authentication verified on LAN and off-LAN through Tailscale; password and root SSH login disabled |
 
 The earlier 2 TB HDD note was stale. The observed disk is approximately 3 TB nominal.
 
@@ -79,16 +79,7 @@ Do not use for:
 
 ### Secure remote access
 
-Verified today:
-
-- ThinkPad → Home PC OpenSSH works over the home LAN;
-- passwordless ED25519 authentication works;
-- SSH, NetworkManager, Docker and containerd are system services and survived the validated reboot;
-- Ubuntu boots automatically by default.
-
-This does **not** yet prove university/off-LAN access.
-
-Current remote-access target, pending implementation and acceptance testing:
+Accepted operating baseline as of 2026-09-20:
 
 ```text
 ThinkPad
@@ -98,18 +89,55 @@ private Tailscale transport
 existing OpenSSH on ypi-worker
 ```
 
-Until this is installed and tested from outside the home LAN, it remains a proposal rather than deployed architecture.
+Verified evidence:
 
-Remote-access rules:
+- Home PC Tailscale address: `100.108.39.117`;
+- ThinkPad Tailscale address observed during acceptance: `100.117.143.124`;
+- off-LAN access was tested from the ThinkPad while it used a phone hotspot rather than the home LAN;
+- Tailscale reached `ypi-worker` through the Frankfurt DERP relay when a direct path was unavailable; this is an accepted fallback, not a failure;
+- existing OpenSSH remained the shell service; Tailscale SSH stayed disabled;
+- `tailscale up` was configured with Tailscale SSH disabled and DNS takeover disabled;
+- ThinkPad ED25519 key authentication succeeded in BatchMode;
+- password-only SSH was rejected with `Permission denied (publickey)`;
+- root SSH login is disabled;
+- the effective OpenSSH hardening drop-in is `/etc/ssh/sshd_config.d/00-remote-worker.conf`;
+- a controlled Home-PC reboot returned networking, Tailscale and OpenSSH without any local graphical login;
+- `tailscaled`, `ssh`, `NetworkManager`, `docker` and `containerd` were all verified active and enabled after reboot.
+
+Effective OpenSSH policy accepted for this period:
+
+```text
+PubkeyAuthentication yes
+PasswordAuthentication no
+KbdInteractiveAuthentication no
+PermitRootLogin no
+```
+
+Remote-access rules remain:
 
 - do not expose SSH directly to the public internet by default;
 - do not expose Supabase, PostgreSQL, Docker APIs or development ports to the public internet;
-- prefer a private overlay with the existing OpenSSH key checks;
-- changing public/home IP addresses must not be a dependency for routine access;
+- use the private Tailscale transport with the existing OpenSSH key boundary;
 - remote administration must return automatically after an ordinary reboot;
-- a second shell mechanism is useful only if it adds real recovery value and does not create last-minute complexity.
+- Tailscale SSH remains optional and is not part of the current baseline.
 
-Tailscale SSH remains optional and separate from the initial baseline because it intercepts tailnet TCP 22 and still shares the `tailscaled`, host-network, power and disk failure domains.
+### Host sleep policy
+
+The Home PC must remain reachable while unattended. The accepted host-wide drop-in is:
+
+`/etc/systemd/sleep.conf.d/90-remote-worker.conf`
+
+with:
+
+```text
+[Sleep]
+AllowSuspend=no
+AllowHibernation=no
+AllowHybridSleep=no
+AllowSuspendThenHibernate=no
+```
+
+The effective configuration was rechecked after reboot. This is intentionally a host-level safeguard rather than a desktop-session preference.
 
 ### Runtime storage
 
@@ -151,16 +179,50 @@ These results validate the Step 3 worker architecture. They do not by themselves
 
 ## Pre-departure remote-readiness acceptance
 
-Before Vuk leaves the Home PC unattended, the important remaining acceptance items are:
+**Status: accepted on 2026-09-20 with a documented physical fallback boundary.**
 
-- verify a private off-LAN connection from the ThinkPad using a genuinely external network;
-- verify remote access returns after reboot without local desktop login;
-- prevent host-wide suspend/hibernate from making the machine unreachable;
-- confirm effective SSH and firewall settings before hardening them;
-- create an off-machine runtime backup and perform an isolated restore test;
-- verify a simple recovery path for power/boot/router failures that cannot be fixed through SSH;
-- bound log growth before unattended long-running workloads;
-- keep the working Ubuntu/kernel/NVIDIA/Docker foundation stable rather than performing unrelated upgrades.
+The reliability gate created after Step 3 is no longer blocking Step 4. Acceptance evidence includes:
+
+- genuinely off-LAN private Tailscale connectivity from the ThinkPad;
+- OpenSSH key-only access over that private path;
+- password and root SSH login disabled;
+- remote access returning after a controlled Home-PC reboot without local GUI login;
+- host-wide suspend/hibernate prevention;
+- `tailscaled`, `ssh`, `NetworkManager`, `docker` and `containerd` active and enabled after reboot;
+- approximately 352 GiB free on the Ubuntu root filesystem at final acceptance;
+- a coherent runtime backup created with the project's SQLite backup mechanism;
+- SHA-256 verification of the backup artifacts;
+- an off-machine copy stored on the ThinkPad;
+- an isolated restore through the project's restore helper;
+- `PRAGMA integrity_check` returning `ok` on both the backup and restored database;
+- migration state `0001` and `0002` preserved in the restored database;
+- a simple physical-helper procedure for failures that cannot be solved in-band.
+
+Verified backup locations at acceptance:
+
+```text
+Home PC:
+/home/vuk/Backups/ypi/20260920-035331
+
+ThinkPad:
+C:\Users\HT-ICT\YPI-Backups\20260920-035331
+
+Isolated restore test:
+/home/vuk/RestoreTests/20260920-035331
+```
+
+The runtime backup was approximately 208 KiB and included the SQLite database, snapshots, exports, logs, empty checkpoints directory, inventory and checksum manifest.
+
+### Docker log-growth control
+
+A scoped Compose change adding per-service `json-file` limits of `max-size: "10m"` and `max-file: "3"` was validated and committed locally in `scraper_project` on branch `chore/bounded-docker-logging`, commit `85329f6`.
+
+At acceptance time that branch had not yet been merged into `main`, and no scraper Compose services were running. Therefore:
+
+- no containers were recreated;
+- the named runtime volume identity remained unchanged;
+- the runtime SQLite `PRAGMA quick_check` returned `ok`;
+- the logging limits should not be treated as active on `main` until the branch is reviewed and merged.
 
 ## Failure domains and recovery boundary
 
