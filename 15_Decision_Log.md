@@ -172,6 +172,22 @@ Tailscale SSH is not part of the baseline. Existing OpenSSH remains the shell bo
 
 **Status:** canonical
 
+## D-016 — Repository-specific step numbering and evidence status
+
+**Date:** 2026-09-28
+
+**Decision:** YPI and `scraper_project` keep their independent historical step sequences. Any status report, prompt or handoff that uses a numbered step must prefix it with the repository/project name when confusion is possible.
+
+Concrete implementation claims use the separate evidence states `PLANNED`, `IMPLEMENTED`, `VERIFIED`, `PARTIAL` and `UNKNOWN`. These are not substitutes for the design-maturity states `hypothesis`, `prototype_decision`, `experiment_supported` and `production_approved`.
+
+A previous runtime acceptance test proves the recorded checkpoint only. It must not be rewritten as proof that an external service or the Home PC is currently online on a later date without a current check.
+
+**Reason:** Both repositories independently used “Step 3”, “Step 4” and “Step 5” for different work. This caused project-state ambiguity and made old documentation easy to misread as current implementation status.
+
+**Effect on architecture:** No technical architecture change. It changes project-language and handoff rules so future sessions can reconstruct state without conflating YPI product/data-engine work with scraper-platform work.
+
+**Status:** canonical
+
 ## New decision template
 
 ### D-XXX — Title
