@@ -30,6 +30,32 @@ The Second Brain is not an activity log. Do not record every command, conversati
 
 Obsidian does not override verified repository evidence.
 
+## Implementation evidence status
+
+Use these labels when describing whether a concrete feature, service or operating capability exists:
+
+- `PLANNED` — documented intention, but the implementation is not present;
+- `IMPLEMENTED` — code/configuration exists, but the required acceptance evidence has not all been demonstrated;
+- `VERIFIED` — the implementation exists and the relevant test, runtime or acceptance evidence has passed;
+- `PARTIAL` — some of the intended boundary exists, but an important part is deliberately missing or incomplete;
+- `UNKNOWN` — available evidence cannot establish the current state.
+
+These labels describe implementation evidence. They are separate from source/design maturity such as `hypothesis`, `prototype_decision`, `experiment_supported` and `production_approved`.
+
+A past verification proves the recorded checkpoint, not the present live state of a machine or external service. For example, a Home-PC reboot test that passed on one date does not justify saying the machine is online today without a current check.
+
+## Repository-specific step numbering
+
+YPI and `scraper_project` have independent historical step sequences.
+
+Always use a repository/project prefix when referring to a numbered step if confusion is possible:
+
+- `scraper_project Step 4` — currently the Boat24 source-specification phase;
+- `YPI Step 4` — the YPI raw-to-normalized bootstrap pipeline;
+- `YPI Step 5` — the valuation-ready/retrieval/scoring-contract work.
+
+Do not translate one repository's step number into the other repository's roadmap.
+
 ## Note status
 
 Use note lifecycle status separately from design maturity.
@@ -62,6 +88,18 @@ Before creating a new note:
 3. link the note from HOME or the relevant source note;
 4. identify anything it supersedes;
 5. preserve useful historical evidence in `archive/` when necessary.
+
+## Public-repository documentation rule
+
+At the 2026-09-28 audit checkpoint, GitHub reports the Second Brain, `scraper_project` and YPI repositories as public.
+
+Until Vuk changes repository visibility:
+
+- do not store credentials, tokens, cookies, private keys or session material;
+- do not store exact private-network addresses, SSH fingerprints, authentication links or other unnecessary operational identifiers;
+- prefer role names, service names and generic local paths over personal-machine identifiers;
+- treat operational details as publishable information before committing them;
+- a future change to repository visibility requires Vuk approval and does not weaken the normal secret-handling rules.
 
 ## Second Brain transparency and selective updates
 
