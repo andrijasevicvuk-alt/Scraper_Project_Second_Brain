@@ -45,7 +45,7 @@ Design maturity is recorded separately as:
 | Machine | Role | Status | Known specification |
 |---|---|---|---|
 | ThinkPad laptop | Control node, development, GitHub, Codex and monitoring | active | ThinkPad L15 Gen 2 |
-| Home PC | Docker worker, acquisition jobs, snapshots and runtime database | planned / validation pending | Ryzen 5 1600, 16 GB RAM, 1 TB SSD, 2 TB HDD |
+| Home PC | Docker worker, future acquisition jobs, snapshots and runtime database | worker architecture verified 2026-09-20; current online state unknown | Ryzen 5 1600, 16 GB RAM, ~1 TB SSD, ~3 TB nominal HDD (about 2.7 TiB observed) |
 
 ## Core infrastructure
 
@@ -53,8 +53,10 @@ Design maturity is recorded separately as:
 |---|---|---|---|
 | GitHub | Code, documentation, migrations and reviews | approved | No secrets or runtime data |
 | Obsidian | Human-readable Second Brain | approved | Not the technical source of truth |
-| Docker Compose | Local container orchestration | approved | Extend existing scaffold; no Kubernetes |
-| SQLite | Source-neutral jobs, checkpoints and runtime ledger | approved | WAL mode, one authoritative queue owner |
+| Docker Compose | Local container orchestration | approved / verified for synthetic worker | Extend existing scaffold; no Kubernetes |
+| SQLite | Source-neutral jobs, checkpoints and runtime ledger | approved / verified | WAL mode, one authoritative queue owner |
+| Tailscale | Private control-node → worker transport | verified at 2026-09-20 checkpoint | Existing OpenSSH remains the shell boundary; current reachability must be checked when needed |
+| OpenSSH | Remote worker administration | verified at 2026-09-20 checkpoint | Key-only; password/root login disabled in accepted configuration |
 | Protected session-state store | Cookies, identity bundles and refresh leases | prototype decision | Separate protected runtime state by default; never Git |
 | PostgreSQL/Supabase | YPI structured data layer | separate YPI responsibility | Do not store all raw HTML in PostgreSQL |
 
@@ -62,7 +64,7 @@ Design maturity is recorded separately as:
 
 | Component | Role | Inventory status | Maturity | Owner / replacement policy |
 |---|---|---|---|---|
-| Existing custom acquisition implementation | Protected acquisition baseline | approved | prototype_decision | Preserve; Vuk-approved component, production evidence still required |
+| Protected live source adapter in current `scraper_project` main | Source-specific acquisition | not implemented | hypothesis / future Step 6 | No Boat24 protected adapter is present on current main; Jules implements only after an approved Gemini blueprint |
 | Source-specific routing policy | Select acquisition route per source/page type | active design | prototype_decision | Gemini blueprint, Jules implementation |
 | Session Sync Bridge | Transfer a validated browser-created identity to a compatible fast client | active design | prototype_decision | Experiment before production |
 | Fast HTTP client (`curl_cffi` candidate) | Efficient list/detail acquisition where compatible | candidate | prototype_decision | Exact client and settings require experiments |
@@ -115,7 +117,7 @@ The current repository implementation still uses standard-library dataclasses an
 
 | Source | Business role | Current state | Maturity |
 |---|---|---|---|
-| Boat24 | Main marketplace backbone | first vertical slice / prototype blueprint | prototype_decision |
+| Boat24 | Main marketplace backbone | source specification in progress (`scraper_project Step 4`) | hypothesis until specification/evidence is approved |
 | Croatian Yachting | Croatian and Adriatic broker anchor | planned | hypothesis |
 | MarineOne / YachtBrokerage | Additional local broker anchor | planned | hypothesis |
 | Njuškalo Nautika | Croatian marketplace coverage | planned | hypothesis |
@@ -125,7 +127,12 @@ The current repository implementation still uses standard-library dataclasses an
 
 Exact listing counts, defense profiles and engine routes stay in source notes or experiments rather than becoming inventory facts without evidence.
 
+## Repository visibility checkpoint
+
+At the 2026-09-28 audit, GitHub reported the Second Brain, `scraper_project` and YPI repositories as public. This is an observed current setting, not a recommendation. See [[13_Risk_Register]] R21 and [[12_Second_Brain_Operating_System]] before adding operational details.
+
 ## Runtime storage
+
 
 | Data | Location | Git status |
 |---|---|---|
@@ -141,11 +148,12 @@ Exact listing counts, defense profiles and engine routes stay in source notes or
 
 ## Current deliverables
 
-- execute Step 3 isolated Docker and dual-node fixture implementation;
-- create persistent worker volumes and safe control scripts;
-- prove synthetic restart and resume behaviour;
-- perform physical ThinkPad-to-home-PC validation;
-- then finalize the Boat24 source specification and prototype sequence.
+- keep `scraper_project` Steps 1–3 closed unless new evidence reveals a regression;
+- finalize and approve the Boat24 source specification;
+- prepare the Gemini source-research/prototype-blueprint handoff;
+- preserve Home-PC live work for the later evidence/fixture/pilot phases rather than making current planning depend on physical access;
+- recover/review/push the local-only bounded-Docker-logging branch before long unattended live workloads;
+- complete the YPI transactional publication hardening before scheduled/high-volume scraper-driven YPI publication.
 
 ## Inventory maintenance rules
 
