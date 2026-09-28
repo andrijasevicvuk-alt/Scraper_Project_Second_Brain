@@ -91,8 +91,7 @@ existing OpenSSH on ypi-worker
 
 Verified evidence:
 
-- Home PC Tailscale address: `100.108.39.117`;
-- ThinkPad Tailscale address observed during acceptance: `100.117.143.124`;
+- both the Home PC and ThinkPad were present in the same private Tailscale network during acceptance;
 - off-LAN access was tested from the ThinkPad while it used a phone hotspot rather than the home LAN;
 - Tailscale reached `ypi-worker` through the Frankfurt DERP relay when a direct path was unavailable; this is an accepted fallback, not a failure;
 - existing OpenSSH remained the shell service; Tailscale SSH stayed disabled;
@@ -224,6 +223,18 @@ At acceptance time that branch had not yet been merged into `main`, and no scrap
 - the runtime SQLite `PRAGMA quick_check` returned `ok`;
 - the logging limits should not be treated as active on `main` until the branch is reviewed and merged.
 
+## Current availability rule while Vuk is away
+
+The remote stack was **verified working on 2026-09-20**. That evidence proves the design and acceptance checkpoint; it does not prove the Home PC is powered on or reachable on a later day.
+
+While Vuk is at college:
+
+- classify current Home-PC power, network and service state as `UNKNOWN` until checked;
+- do not block repository-only planning, documentation, parser or test work on a live Home-PC check;
+- if the machine is off, the realistic first recovery action is a trusted local person pressing the power button once;
+- use [[21_Remote_Worker_Runbook]] only when a live worker action is actually required;
+- do not ask the local helper to run Linux commands, edit configuration or diagnose Docker.
+
 ## Failure domains and recovery boundary
 
 Remote administration depends on more than SSH. A working remote path still depends on:
@@ -232,7 +243,7 @@ Remote administration depends on more than SSH. A working remote path still depe
 - successful Ubuntu boot;
 - host networking;
 - home router/ISP availability;
-- the private-overlay service once deployed;
+- Tailscale;
 - OpenSSH;
 - valid identity/key state;
 - sufficient disk space.
