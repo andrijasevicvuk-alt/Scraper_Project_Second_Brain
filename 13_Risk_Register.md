@@ -203,7 +203,7 @@ Mitigation:
 - restored SQLite integrity check returned `ok`;
 - schema migrations `0001` and `0002` were preserved.
 
-**Accepted checkpoint:** Home-PC backup `/home/vuk/Backups/ypi/20260920-035331`; ThinkPad copy `C:\Users\HT-ICT\YPI-Backups\20260920-035331`.
+**Accepted checkpoint:** a date-stamped Home-PC backup and an off-machine ThinkPad copy were both verified on 2026-09-20. Exact machine-local paths are intentionally omitted from the public Second Brain.
 
 **Status:** mitigation validated. Future live-data operation still requires periodic fresh backups rather than relying indefinitely on this one checkpoint.
 
@@ -248,3 +248,40 @@ Mitigation:
 **Remote recovery:** recover from verified off-device copies.
 
 **Physical recovery:** access original machine/storage when no copy exists.
+
+
+## R21 — public repository exposure reveals more operational detail than intended
+
+**Probability:** current condition, not a hypothetical risk.
+
+**Impact:** medium/high. GitHub reported the Second Brain, `scraper_project` and YPI repositories as public at the 2026-09-28 audit checkpoint. Public source code may be an intentional choice, but operational notes can reveal architecture, machine roles, internal identifiers or future acquisition strategy.
+
+**Detection:** repository visibility check plus review of committed documentation and Git history.
+
+**Mitigation:**
+
+- never commit secrets, credentials, cookies, private keys or session material regardless of repository visibility;
+- remove unnecessary private-network addresses and machine-specific authentication identifiers from public documentation;
+- keep examples generic;
+- Vuk decides whether any repository should be made private;
+- before production credentials or proprietary acquisition implementation are introduced, confirm the intended visibility and access model.
+
+**Unknown:** this audit did not perform a complete secret scan of all Git history.
+
+**Status:** open; requires Vuk decision on repository visibility.
+
+## R22 — YPI publication is not atomic before scraper-driven volume
+
+**Probability:** known architectural limitation if higher-volume scraper batches are sent into the current YPI publication path.
+
+**Impact:** high. A failure between separate Supabase REST writes can leave partial normalized state even when the raw record is later marked failed.
+
+**Evidence:** YPI Step 4 documentation and implementation explicitly defer transactional publication/recovery hardening. Current safeguards improve idempotency but do not make the full publication sequence atomic.
+
+**Mitigation:**
+
+- allow `scraper_project` Steps 4–7 to continue because source specification, protected acquisition prototype and offline parsing do not require high-volume YPI publication;
+- before scheduled scraper-driven ingestion, large batch ingestion or production/non-local publication, implement and verify the YPI Step 4D transactional publication boundary and partial-publication recovery tests;
+- preserve the scraper→YPI boundary: scraper batches enter YPI raw ingestion and never write normalized/business tables directly.
+
+**Status:** deferred cross-repository gate; does not block current `scraper_project Step 4`, but blocks high-volume automated scraper→YPI publication.
