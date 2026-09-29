@@ -2,13 +2,27 @@
 
 Codex should receive one narrow source-neutral task at a time.
 
+## Session-start rule
+
+For a new session, read in this order:
+
+1. [[20_Session_Start]];
+2. [[14_Project_Status_and_Next_Actions]];
+3. [[02_Project_Boundaries_and_AI_Roles]];
+4. the relevant source note;
+5. `scraper_project/AGENTS.md`;
+6. the actual repository files, migrations and tests needed for the task;
+7. [[16_Implementation_Prompt_Sequence]] only for detailed step instructions.
+
+Never infer the current step from an old prompt, archived conversation or YPI's separate step numbering. Say `scraper_project Step N` or `YPI Step N` when ambiguity is possible.
+
 ## Before every Codex task
 
 Codex must:
 
 1. inspect the relevant current files in the Scraper Project Second Brain repository;
 2. inspect the relevant files, tests, migrations and current tree in `scraper_project`;
-3. identify the current implementation step from `16_Implementation_Prompt_Sequence.md`;
+3. identify the current `scraper_project` implementation step from [[20_Session_Start]], [[14_Project_Status_and_Next_Actions]] and then the detailed playbook;
 4. verify that the requested work belongs to that step;
 5. identify conflicts between repository code and the Second Brain;
 6. classify each conflict as:
@@ -20,7 +34,9 @@ Codex must:
 9. identify whether protected paths are involved;
 10. avoid direct protected-path edits;
 11. run appropriate tests;
-12. propose new ideas only when they solve a concrete evidence-supported weakness or opportunity.
+12. classify important claims as `PLANNED`, `IMPLEMENTED`, `VERIFIED`, `PARTIAL` or `UNKNOWN` using [[12_Second_Brain_Operating_System]];
+13. when a task depends on the Home PC, distinguish the last verified checkpoint from its current live state;
+14. propose new ideas only when they solve a concrete evidence-supported weakness or opportunity.
 
 ## Safe Codex sequence
 

@@ -490,7 +490,11 @@ Recorded completion evidence:
 - Ubuntu boots automatically by default.
 - Windows 10 was manually selected and booted successfully, then a restart returned automatically to Ubuntu.
 
-The pre-departure remote-reliability work is a separate operational acceptance gate created after Step 3 completion. It does not reopen Step 3. Step 4 is not authorized until that gate passes or Vuk explicitly accepts the remaining operational risk.
+The pre-departure remote-reliability work was a separate operational acceptance gate created after Step 3 completion. It did not reopen Step 3.
+
+That gate passed/was accepted on 2026-09-20 after off-LAN Tailscale access, key-only OpenSSH, reboot recovery without local GUI login, host-wide sleep prevention, an off-machine checksum-verified backup and an isolated restore test all passed. The remaining power/boot/router failure boundary is explicitly handled by a simple trusted-local-helper fallback.
+
+**Step 4 is now authorized.** The next task is to prepare and approve the Boat24 source specification before any live source implementation or acquisition.
 
 ### Expected result
 

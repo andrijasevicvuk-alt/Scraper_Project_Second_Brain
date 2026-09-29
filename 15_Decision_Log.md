@@ -134,21 +134,59 @@ Git history is the lightweight Second Brain change log; the Decision Log records
 
 ## D-015 — Private remote administration and recovery baseline
 
-**Date:** 2026-09-19
+**Date:** 2026-09-19; acceptance completed 2026-09-20
 
-**Decision:** The current proposed pre-departure remote-administration baseline is private Tailscale transport to the existing OpenSSH service on `ypi-worker`, with no direct public exposure of SSH, Supabase, PostgreSQL, Docker APIs or development ports.
+**Decision:** Use private Tailscale transport to the existing OpenSSH service on `ypi-worker` as the remote-administration baseline for the university-away period. Do not expose SSH, Supabase, PostgreSQL, Docker APIs or development ports directly to the public internet by default.
 
-The proposal also requires an off-machine restore-tested runtime backup and a simple local/physical recovery path for failures that cannot be fixed in-band.
+The accepted baseline also requires:
 
-Tailscale SSH is not part of the initial baseline. It may be evaluated later as a second shell only with explicit port/policy planning because it intercepts tailnet TCP 22 and still shares the same Tailscale daemon, host network, power and disk failure domains.
+- key-only OpenSSH access;
+- password and root SSH login disabled;
+- host-wide suspend/hibernate prevention;
+- networking, Tailscale and OpenSSH returning automatically after an ordinary reboot without local GUI login;
+- a coherent off-machine restore-tested runtime backup;
+- a simple physical recovery owner for power, boot or home-network failures that cannot be repaired in-band.
 
-**Reason:** Vuk will not have physical access to the Home PC for approximately one month. Remote recoverability therefore becomes an operational architecture requirement.
+Tailscale SSH is not part of the baseline. Existing OpenSSH remains the shell boundary.
 
-**Alternatives considered:** public OpenSSH with forwarding/DDNS; direct WireGuard; WireGuard through a VPS; Tailscale plus existing OpenSSH; a separate remote-KVM/power path.
+**Acceptance evidence:**
 
-**Effect on architecture:** Adds a proposed operational-access and recovery layer around the existing dual-node worker. It does not change source acquisition, queue, parser or YPI boundaries and does not authorize Boat24 Step 4.
+- genuine off-LAN access from the ThinkPad over a phone hotspot passed;
+- Tailscale DERP relay fallback was observed and accepted when a direct path was unavailable;
+- ThinkPad key-only SSH passed in BatchMode;
+- password-only SSH was rejected;
+- controlled reboot returned `tailscaled`, `ssh`, `NetworkManager`, `docker` and `containerd` automatically;
+- host sleep prohibitions remained effective after reboot;
+- an off-machine backup was copied to the ThinkPad;
+- backup checksums passed;
+- backup and isolated restored SQLite databases both passed integrity checks;
+- restored migration state preserved `0001` and `0002`.
 
-**Status:** draft — approved as the current proposal for implementation/testing, but not production-approved until installed and passed outside-LAN, logout, reboot and recovery acceptance tests.
+**Reason:** Vuk will not have physical access to the Home PC for approximately one month. Remote recoverability is therefore part of the operating architecture, not merely convenience.
+
+**Alternatives considered:** public OpenSSH with forwarding/DDNS; direct WireGuard; WireGuard through a VPS; Tailscale plus existing OpenSSH; Tailscale SSH; a separate remote-KVM/power path.
+
+**Residual boundary:** Tailscale is still in-band. A hard power loss, hardware fault, failed boot before networking or home-router/ISP outage may require a trusted local person. No independently tested out-of-band KVM/power system was added.
+
+**Effect on architecture:** Adds a verified operational-access and recovery layer around the existing dual-node worker. It does not change source acquisition, queue, parser or YPI boundaries. With the remote-readiness gate accepted, Step 4 may proceed.
+
+**Status:** canonical
+
+## D-016 — Repository-specific step numbering and evidence status
+
+**Date:** 2026-09-28
+
+**Decision:** YPI and `scraper_project` keep their independent historical step sequences. Any status report, prompt or handoff that uses a numbered step must prefix it with the repository/project name when confusion is possible.
+
+Concrete implementation claims use the separate evidence states `PLANNED`, `IMPLEMENTED`, `VERIFIED`, `PARTIAL` and `UNKNOWN`. These are not substitutes for the design-maturity states `hypothesis`, `prototype_decision`, `experiment_supported` and `production_approved`.
+
+A previous runtime acceptance test proves the recorded checkpoint only. It must not be rewritten as proof that an external service or the Home PC is currently online on a later date without a current check.
+
+**Reason:** Both repositories independently used “Step 3”, “Step 4” and “Step 5” for different work. This caused project-state ambiguity and made old documentation easy to misread as current implementation status.
+
+**Effect on architecture:** No technical architecture change. It changes project-language and handoff rules so future sessions can reconstruct state without conflating YPI product/data-engine work with scraper-platform work.
+
+**Status:** canonical
 
 ## New decision template
 
